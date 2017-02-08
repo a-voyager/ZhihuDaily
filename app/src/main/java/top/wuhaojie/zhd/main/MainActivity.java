@@ -1,11 +1,12 @@
-package top.wuhaojie.zhd;
+package top.wuhaojie.zhd.main;
 
+import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
     @Override
-    protected int getLayoutResID() {
+    public int getLayoutResID() {
         return R.layout.activity_main;
     }
 
