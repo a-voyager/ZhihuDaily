@@ -1,12 +1,14 @@
 package top.wuhaojie.zhd.base;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 /**
@@ -21,4 +23,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         return inflater.inflate(getLayoutResID(), container, false);
     }
 
+    @Override
+    @CallSuper
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        ButterKnife.bind(this, view);
+    }
 }
