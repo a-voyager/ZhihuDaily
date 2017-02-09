@@ -1,4 +1,4 @@
-package top.wuhaojie.zhd.main;
+package top.wuhaojie.zhd.home;
 
 import android.content.Context;
 
@@ -9,11 +9,11 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
  * Created by wuhaojie on 17-2-9.
  */
 
-public class MainFragmentPresenter implements BasePresenter {
+public class HomePresenter implements BasePresenter {
 
     private Context mContext;
 
-    public MainFragmentPresenter(Context context) {
+    public HomePresenter(Context context) {
         mContext = context;
     }
 

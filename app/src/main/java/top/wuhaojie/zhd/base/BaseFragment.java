@@ -28,4 +28,14 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (getUserVisibleHint()) {
+            loadData();
+        }
+    }
+
+    protected abstract void loadData();
 }
