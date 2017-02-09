@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="top.wuhaojie.zhd.main.MainActivityFragment"
-    tools:showIn="@layout/activity_main">
+    tools:context="top.wuhaojie.zhd.main.MainFragment"
+    tools:showIn="@layout/activity_home">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srf_main"

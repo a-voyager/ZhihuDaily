@@ -17,7 +17,7 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -9,11 +9,11 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
  * Created by wuhaojie on 17-2-9.
  */
 
-public class MainActivityPresenter implements BasePresenter {
+public class HomePresenter implements BasePresenter {
 
     private Context mContext;
 
-    public MainActivityPresenter(Context context) {
+    public HomePresenter(Context context) {
         mContext = context;
     }
 

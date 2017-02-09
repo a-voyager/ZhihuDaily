@@ -10,11 +10,11 @@ import top.wuhaojie.zhd.base.BaseFragment;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends BaseFragment {
+public class MainFragment extends BaseFragment {
 
     MainFragmentPresenter mMainFragmentPresenter;
 
-    public MainActivityFragment() {
+    public MainFragment() {
     }
 
     @Override
