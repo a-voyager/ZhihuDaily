@@ -1,5 +1,7 @@
 package top.wuhaojie.zhd.home.main;
 
+import java.util.List;
+
 import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 /**
@@ -7,4 +9,7 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
  */
 
 public interface MainFragmentView extends BaseView {
+    void setBanner(List<String> images, List<String> titles);
+
+    void loadCompleted();
 }

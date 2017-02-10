@@ -29,13 +29,4 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         ButterKnife.bind(this, view);
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (getUserVisibleHint()) {
-            loadData();
-        }
-    }
-
-    protected abstract void loadData();
 }

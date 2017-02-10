@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.youth.banner.Banner;
 
+import java.util.List;
+
 import butterknife.BindView;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
@@ -34,8 +36,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
     public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
-        return fragment;
+        return new MainFragment();
     }
 
     @Override
@@ -44,10 +45,15 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         mMainFragmentPresenter = new MainFragmentPresenter(getActivity());
         mMainFragmentPresenter.bindView(this);
 
+        mSrfMain.setOnRefreshListener(() -> mMainFragmentPresenter.onRefresh());
+
         mBannerHot
+                .setDelayTime(2000)
                 .setImageLoader(new BannerImageLoader())
                 .isAutoPlay(true)
                 .start();
+
+        mMainFragmentPresenter.onViewCreated(view, savedInstanceState);
 
     }
 
@@ -63,13 +69,22 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         mBannerHot.stopAutoPlay();
     }
 
-    @Override
-    protected void loadData() {
-        mMainFragmentPresenter.loadData();
-    }
 
     @Override
     public int getLayoutResID() {
         return R.layout.fragment_main;
+    }
+
+    @Override
+    public void setBanner(List<String> images, List<String> titles) {
+        mBannerHot
+                .setImages(images)
+                .setBannerTitles(titles)
+                .start();
+    }
+
+    @Override
+    public void loadCompleted() {
+        mSrfMain.setRefreshing(false);
     }
 }

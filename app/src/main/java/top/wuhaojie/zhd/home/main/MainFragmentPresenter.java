@@ -1,9 +1,18 @@
 package top.wuhaojie.zhd.home.main;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Subscriber;
 import top.wuhaojie.zhd.base.interfaces.BasePresenter;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
+import top.wuhaojie.zhd.data.HttpUtils;
+import top.wuhaojie.zhd.entities.LatestMessageResponse;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -11,6 +20,7 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 public class MainFragmentPresenter implements BasePresenter {
 
+    private static final String TAG = "MainFragmentPresenter";
     private Context mContext;
     private MainFragmentView mView;
 
@@ -23,7 +33,40 @@ public class MainFragmentPresenter implements BasePresenter {
         mView = (MainFragmentView) view;
     }
 
-    public void loadData() {
+    private void loadData() {
+        HttpUtils.getLatestMessages(new Subscriber<LatestMessageResponse>() {
+            @Override
+            public void onCompleted() {
+                mView.loadCompleted();
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, "onError: ", e);
+            }
+
+            @Override
+            public void onNext(LatestMessageResponse latestMessageResponse) {
+                Log.d(TAG, "onNext: Message = " + latestMessageResponse);
+                List<LatestMessageResponse.TopStoriesBean> topStories = latestMessageResponse.getTop_stories();
+                ArrayList<String> images = new ArrayList<>();
+                ArrayList<String> titles = new ArrayList<>();
+                for (LatestMessageResponse.TopStoriesBean story : topStories) {
+                    String image = story.getImage();
+                    String title = story.getTitle();
+                    images.add(image);
+                    titles.add(title);
+                }
+                mView.setBanner(images, titles);
+            }
+        });
+    }
+
+    public void onRefresh() {
+        loadData();
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        loadData();
     }
 }

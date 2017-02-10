@@ -53,9 +53,8 @@ public class GlideImageLoader extends ImageLoader {
             throw new IllegalArgumentException("view is not a ImageView");
         ImageView iv = (ImageView) view;
         // 兼容旧版本
-        if (uri.startsWith("asset:///")) uri = uri.substring(9);
         DrawableRequestBuilder<String> builder = mRequestManager
-                .load("file:///android_asset/" + uri);
+                .load(uri);
         if (hasOption(OPTION_CENTER_CROP)) builder.centerCrop();
         if (hasOption(OPTION_CIRCLE_CROP)) builder.transform(GLIDE_CIRCLE_TRANSFORM);
         builder.into(iv);
