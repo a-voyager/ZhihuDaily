@@ -1,6 +1,7 @@
 package top.wuhaojie.zhd.home.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import rx.Subscriber;
 import top.wuhaojie.zhd.base.interfaces.BasePresenter;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
 import top.wuhaojie.zhd.data.HttpUtils;
+import top.wuhaojie.zhd.detail.DetailActivity;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
 
@@ -83,6 +85,7 @@ public class MainFragmentPresenter implements BasePresenter {
     }
 
     public void onMainContentListItemClick(MainContentListAdapter.Item item) {
-
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        mContext.startActivity(intent);
     }
 }
