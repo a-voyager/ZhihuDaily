@@ -81,4 +81,8 @@ public class MainFragmentPresenter implements BasePresenter {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         loadData();
     }
+
+    public void onMainContentListItemClick(MainContentListAdapter.Item item) {
+
+    }
 }

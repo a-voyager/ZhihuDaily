@@ -58,13 +58,15 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
                 .isAutoPlay(true)
                 .start();
 
-        mMainFragmentPresenter.onViewCreated(view, savedInstanceState);
+
+        mMainContentListAdapter = new MainContentListAdapter(mActivity);
+        mMainContentListAdapter.setOnItemClickListener(item -> mMainFragmentPresenter.onMainContentListItemClick(item));
 
         mRvContentMain.setLayoutManager(new LinearLayoutManager(mActivity));
-        mMainContentListAdapter = new MainContentListAdapter(mActivity);
         mRvContentMain.setAdapter(mMainContentListAdapter);
 
 
+        mMainFragmentPresenter.onViewCreated(view, savedInstanceState);
     }
 
     @Override
