@@ -1,5 +1,7 @@
 package top.wuhaojie.zhd.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
@@ -17,6 +19,8 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 public abstract class BaseFragment extends Fragment implements BaseView {
 
+    protected Activity mActivity;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,4 +33,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
         ButterKnife.bind(this, view);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Activity) mActivity = (Activity) context;
+    }
 }

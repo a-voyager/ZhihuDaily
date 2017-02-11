@@ -13,6 +13,7 @@ import top.wuhaojie.zhd.base.interfaces.BasePresenter;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
+import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -58,6 +59,17 @@ public class MainFragmentPresenter implements BasePresenter {
                     titles.add(title);
                 }
                 mView.setBanner(images, titles);
+
+                List<LatestMessageResponse.StoriesBean> stories = latestMessageResponse.getStories();
+                ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
+                for (LatestMessageResponse.StoriesBean st : stories) {
+                    MainContentListAdapter.Item item = new MainContentListAdapter.Item();
+                    item.title = st.getTitle();
+                    item.imgUrl = st.getImages().get(0);
+                    item.id = st.getId();
+                    items.add(item);
+                }
+                mView.setListContent(items);
             }
         });
     }

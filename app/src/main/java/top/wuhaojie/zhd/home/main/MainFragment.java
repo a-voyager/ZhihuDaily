@@ -3,6 +3,7 @@ package top.wuhaojie.zhd.home.main;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
+import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
 import top.wuhaojie.zhd.utils.BannerImageLoader;
 
 import static android.content.ContentValues.TAG;
@@ -30,6 +32,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     RecyclerView mRvContentMain;
     @BindView(R.id.srf_main)
     SwipeRefreshLayout mSrfMain;
+    private MainContentListAdapter mMainContentListAdapter;
 
     public MainFragment() {
         Log.d(TAG, "MainFragment: new Instance");
@@ -54,6 +57,11 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
                 .start();
 
         mMainFragmentPresenter.onViewCreated(view, savedInstanceState);
+
+        mRvContentMain.setLayoutManager(new LinearLayoutManager(mActivity));
+        mMainContentListAdapter = new MainContentListAdapter(mActivity);
+        mRvContentMain.setAdapter(mMainContentListAdapter);
+
 
     }
 
@@ -86,5 +94,10 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void loadCompleted() {
         mSrfMain.setRefreshing(false);
+    }
+
+    @Override
+    public void setListContent(List<MainContentListAdapter.Item> items) {
+        mMainContentListAdapter.setList(items);
     }
 }
