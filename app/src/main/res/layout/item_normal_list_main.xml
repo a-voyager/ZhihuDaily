@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
+    android:layout_margin="6dp"
     app:contentPadding="10dp">
 
     <LinearLayout
@@ -15,11 +15,12 @@
 
         <TextView
             android:id="@+id/tv_title"
-            style="@style/TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            android:textColor="#000"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             tools:text="每一个人都怀揣梦想前来，艺考早就不只是一次考试了"/>
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
 
 import java.util.List;
 
@@ -51,7 +52,8 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         mSrfMain.setOnRefreshListener(() -> mMainFragmentPresenter.onRefresh());
 
         mBannerHot
-                .setDelayTime(2000)
+                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE)
+                .setDelayTime(4000)
                 .setImageLoader(new BannerImageLoader())
                 .isAutoPlay(true)
                 .start();
