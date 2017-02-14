@@ -16,11 +16,11 @@ public class DetailContentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        return DetailContentFragment.newInstance("a", "b");
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return 6;
     }
 }
