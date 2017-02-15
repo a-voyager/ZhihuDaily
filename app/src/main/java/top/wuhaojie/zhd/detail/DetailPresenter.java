@@ -29,4 +29,12 @@ public class DetailPresenter implements BasePresenter {
         if (itemId == android.R.id.home) mView.back();
         return true;
     }
+
+    public boolean onCommentMenuItemClick(MenuItem item) {
+        return false;
+    }
+
+    public boolean onPraiseMenuItemClick(MenuItem item) {
+        return false;
+    }
 }

@@ -39,8 +39,10 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         MenuItem comment = menu.findItem(R.id.action_comment);
         comment.setActionView(R.layout.action_comment);
+        comment.setOnMenuItemClickListener(item -> mDetailPresenter.onCommentMenuItemClick(item));
         MenuItem praise = menu.findItem(R.id.action_praise);
         praise.setActionView(R.layout.action_praise);
+        praise.setOnMenuItemClickListener(item -> mDetailPresenter.onPraiseMenuItemClick(item));
         return super.onCreateOptionsMenu(menu);
     }
 
