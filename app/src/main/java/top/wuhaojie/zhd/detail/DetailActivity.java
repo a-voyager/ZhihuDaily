@@ -1,21 +1,27 @@
 package top.wuhaojie.zhd.detail;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseActivity;
+import top.wuhaojie.zhd.constant.Constants;
 
 public class DetailActivity extends BaseActivity implements DetailView, DetailContentFragment.OnFragmentInteractionListener {
 
     DetailPresenter mDetailPresenter;
     @BindView(R.id.vp_detail_content)
     ViewPager mVpDetailContent;
+    private TextView mCommentNumber;
+    private TextView mPraiseNumber;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,8 +29,25 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
         mDetailPresenter = new DetailPresenter(this);
         mDetailPresenter.bindView(this);
 
+
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mVpDetailContent.setAdapter(new DetailContentAdapter(getSupportFragmentManager()));
+
+        DetailContentAdapter detailContentAdapter = new DetailContentAdapter(getSupportFragmentManager());
+        mVpDetailContent.setAdapter(detailContentAdapter);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            ArrayList<String> list = intent.getStringArrayListExtra(Constants.INTENT_EXTRA_STORY_IDS);
+            detailContentAdapter.setStoryIds(list);
+
+            String currId = intent.getStringExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID);
+            for (int i = 0; i < list.size(); i++) {
+                if (currId.equals(list.get(i))) {
+                    mVpDetailContent.setCurrentItem(i);
+                    break;
+                }
+            }
+        }
 
     }
 
@@ -40,9 +63,11 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
         MenuItem comment = menu.findItem(R.id.action_comment);
         comment.setActionView(R.layout.action_comment);
         comment.setOnMenuItemClickListener(item -> mDetailPresenter.onCommentMenuItemClick(item));
+        mCommentNumber = (TextView) comment.getActionView().findViewById(R.id.tv_comment_number);
         MenuItem praise = menu.findItem(R.id.action_praise);
         praise.setActionView(R.layout.action_praise);
         praise.setOnMenuItemClickListener(item -> mDetailPresenter.onPraiseMenuItemClick(item));
+        mPraiseNumber = (TextView) praise.getActionView().findViewById(R.id.tv_praise_number);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -59,7 +84,8 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void refreshToolBar(String commentNumber, String praiseNumber) {
+        mCommentNumber.setText(commentNumber);
+        mPraiseNumber.setText(praiseNumber);
     }
 }

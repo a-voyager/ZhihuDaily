@@ -2,7 +2,9 @@ package top.wuhaojie.zhd.data.api;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
+import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 
 /**
@@ -17,5 +19,9 @@ public interface APIService {
 
     @GET("latest")
     Observable<LatestMessageResponse> getLatestMessages();
+
+    @GET("{id}")
+    Observable<DetailMessageResponse> getDetailMessage(@Path("id") String id);
+
 
 }

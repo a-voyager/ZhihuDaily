@@ -12,6 +12,7 @@ import java.util.List;
 import rx.Subscriber;
 import top.wuhaojie.zhd.base.interfaces.BasePresenter;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
+import top.wuhaojie.zhd.constant.Constants;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.detail.DetailActivity;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
@@ -26,6 +27,7 @@ public class MainFragmentPresenter implements BasePresenter {
     private static final String TAG = "MainFragmentPresenter";
     private Context mContext;
     private MainFragmentView mView;
+    private ArrayList<String> mStoryIds;
 
     public MainFragmentPresenter(Context context) {
         mContext = context;
@@ -63,6 +65,7 @@ public class MainFragmentPresenter implements BasePresenter {
                 mView.setBanner(images, titles);
 
                 List<LatestMessageResponse.StoriesBean> stories = latestMessageResponse.getStories();
+                mStoryIds = new ArrayList<>();
                 ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
                 for (LatestMessageResponse.StoriesBean st : stories) {
                     MainContentListAdapter.Item item = new MainContentListAdapter.Item();
@@ -70,6 +73,8 @@ public class MainFragmentPresenter implements BasePresenter {
                     item.imgUrl = st.getImages().get(0);
                     item.id = st.getId();
                     items.add(item);
+
+                    mStoryIds.add(String.valueOf(item.id));
                 }
                 mView.setListContent(items);
             }
@@ -86,6 +91,8 @@ public class MainFragmentPresenter implements BasePresenter {
 
     public void onMainContentListItemClick(MainContentListAdapter.Item item) {
         Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_STORY_IDS, mStoryIds);
+        intent.putExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID, String.valueOf(item.id));
         mContext.startActivity(intent);
     }
 }

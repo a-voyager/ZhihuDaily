@@ -4,11 +4,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by wuhaojie on 17-2-12.
  */
 
 public class DetailContentAdapter extends FragmentStatePagerAdapter {
+
+    private List<String> mStoryIds = new ArrayList<>();
+
+    public void setStoryIds(List<String> list) {
+        mStoryIds.clear();
+        mStoryIds.addAll(list);
+        notifyDataSetChanged();
+    }
 
     public DetailContentAdapter(FragmentManager fm) {
         super(fm);
@@ -16,11 +27,11 @@ public class DetailContentAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return DetailContentFragment.newInstance("a", "b");
+        return DetailContentFragment.newInstance(mStoryIds.get(position));
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return mStoryIds.size();
     }
 }

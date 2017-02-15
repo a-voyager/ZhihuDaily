@@ -13,6 +13,7 @@
         android:src="@drawable/comment"/>
 
     <TextView
+        android:id="@+id/tv_comment_number"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

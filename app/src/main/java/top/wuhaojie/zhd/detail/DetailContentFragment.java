@@ -1,24 +1,37 @@
 package top.wuhaojie.zhd.detail;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.util.List;
+
+import butterknife.BindView;
+import rx.Subscriber;
+import top.wuhaojie.lib.image.ImageLoader;
 import top.wuhaojie.zhd.R;
+import top.wuhaojie.zhd.base.BaseFragment;
+import top.wuhaojie.zhd.data.HttpUtils;
+import top.wuhaojie.zhd.entities.DetailMessageResponse;
 
-public class DetailContentFragment extends Fragment {
+public class DetailContentFragment extends BaseFragment {
     private static final String ARG_STORY_ID = "param_id";
+    private static final String TAG = "DetailContentFragment";
+    @BindView(R.id.iv_big_img)
+    ImageView mIvBigImg;
+    @BindView(R.id.tv_source)
+    TextView mTvSource;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
 
     private String mStoryId;
 
     private OnFragmentInteractionListener mListener;
-
-    public DetailContentFragment() {
-    }
 
     public static DetailContentFragment newInstance(String id) {
         DetailContentFragment fragment = new DetailContentFragment();
@@ -36,15 +49,10 @@ public class DetailContentFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_detail_content, container, false);
-    }
 
-    public void onButtonPressed(Uri uri) {
+    public void onUpdateToolBar(String commentNumber, String praiseNumber) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.refreshToolBar(commentNumber, praiseNumber);
         }
     }
 
@@ -65,7 +73,63 @@ public class DetailContentFragment extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public int getLayoutResID() {
+        return R.layout.fragment_detail_content;
+    }
+
+
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        void refreshToolBar(String commentNumber, String praiseNumber);
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        loadResponse();
+    }
+
+    private void loadResponse() {
+        if (TextUtils.isEmpty(mStoryId)) {
+            throw new NullPointerException("story id is null");
+        }
+        HttpUtils.getDetailMessage(mStoryId, new Subscriber<DetailMessageResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(DetailMessageResponse detailMessageResponse) {
+                Log.d(TAG, "onNext: " + detailMessageResponse);
+                inflateData(detailMessageResponse);
+            }
+        });
+    }
+
+    private void inflateData(DetailMessageResponse detailMessageResponse) {
+        String title = detailMessageResponse.getTitle();
+        mTvTitle.setText(title);
+
+        String imageSource = detailMessageResponse.getImage_source();
+        mTvSource.setText(imageSource);
+
+        String imageUrl = detailMessageResponse.getImage();
+        ImageLoader.get().load(imageUrl, mIvBigImg);
+
+        String body = detailMessageResponse.getBody();
+
+        List<String> css = detailMessageResponse.getCss();
+
+        List<String> js = detailMessageResponse.getJs();
+
+        String shareUrl = detailMessageResponse.getShare_url();
+
     }
 }

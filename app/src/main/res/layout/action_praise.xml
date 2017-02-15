@@ -13,6 +13,7 @@
         android:src="@drawable/praise"/>
 
     <TextView
+        android:id="@+id/tv_praise_number"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"

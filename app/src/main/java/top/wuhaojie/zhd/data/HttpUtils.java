@@ -5,6 +5,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import top.wuhaojie.lib.http.RetrofitHttpHelper;
 import top.wuhaojie.zhd.data.api.APIService;
+import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 
 /**
@@ -35,6 +36,17 @@ public class HttpUtils {
         mRetrofitHttpHelper
                 .getService()
                 .getLatestMessages()
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public static void getDetailMessage(String id, Subscriber<DetailMessageResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getDetailMessage(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
