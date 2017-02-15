@@ -18,6 +18,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:maxEms="3"
-        android:text="1.7K"
+        android:text="..."
         android:textColor="#FFF"/>
 </LinearLayout>

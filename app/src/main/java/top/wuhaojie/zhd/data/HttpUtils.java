@@ -7,6 +7,7 @@ import top.wuhaojie.lib.http.RetrofitHttpHelper;
 import top.wuhaojie.zhd.data.api.APIService;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
+import top.wuhaojie.zhd.entities.StoryExtraResponse;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -47,6 +48,16 @@ public class HttpUtils {
         mRetrofitHttpHelper
                 .getService()
                 .getDetailMessage(id)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    public static void getStoryExtra(String id, Subscriber<StoryExtraResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getStoryExtra(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

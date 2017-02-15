@@ -18,6 +18,7 @@ import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
+import top.wuhaojie.zhd.entities.StoryExtraResponse;
 
 public class DetailContentFragment extends BaseFragment {
     private static final String ARG_STORY_ID = "param_id";
@@ -87,10 +88,35 @@ public class DetailContentFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadResponse();
+        loadContent();
+        loadToolBar();
     }
 
-    private void loadResponse() {
+    private void loadToolBar() {
+        if (TextUtils.isEmpty(mStoryId)) {
+            throw new NullPointerException("story id is null");
+        }
+        HttpUtils.getStoryExtra(mStoryId, new Subscriber<StoryExtraResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(StoryExtraResponse storyExtraResponse) {
+                int comments = storyExtraResponse.getComments();
+                int popularity = storyExtraResponse.getPopularity();
+                onUpdateToolBar(comments + "", popularity + "");
+            }
+        });
+    }
+
+    private void loadContent() {
         if (TextUtils.isEmpty(mStoryId)) {
             throw new NullPointerException("story id is null");
         }

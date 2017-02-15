@@ -6,22 +6,25 @@ import retrofit2.http.Path;
 import rx.Observable;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
+import top.wuhaojie.zhd.entities.StoryExtraResponse;
 
 /**
  * Created by wuhaojie on 17-2-9.
  */
 
 public interface APIService {
-    String BASE_URL = "http://news-at.zhihu.com/api/4/news/";
+    String BASE_URL = "http://news-at.zhihu.com/api/4/";
 
     @GET("")
     Observable<ResponseBody> getStartImage();
 
-    @GET("latest")
+    @GET("news/latest")
     Observable<LatestMessageResponse> getLatestMessages();
 
-    @GET("{id}")
+    @GET("news/{id}")
     Observable<DetailMessageResponse> getDetailMessage(@Path("id") String id);
 
+    @GET("story-extra/{id}")
+    Observable<StoryExtraResponse> getStoryExtra(@Path("id") String id);
 
 }
