@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.BindView;
@@ -31,6 +32,18 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
     public int getLayoutResID() {
         return R.layout.activity_detail;
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        MenuItem comment = menu.findItem(R.id.action_comment);
+        comment.setActionView(R.layout.action_comment);
+        MenuItem praise = menu.findItem(R.id.action_praise);
+        praise.setActionView(R.layout.action_praise);
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
