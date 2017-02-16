@@ -15,12 +15,12 @@ import butterknife.BindView;
 import rx.Subscriber;
 import top.wuhaojie.lib.image.ImageLoader;
 import top.wuhaojie.zhd.R;
-import top.wuhaojie.zhd.base.BaseFragment;
+import top.wuhaojie.zhd.base.BaseViewPagerFragment;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 
-public class DetailContentFragment extends BaseFragment {
+public class DetailContentFragment extends BaseViewPagerFragment {
     private static final String ARG_STORY_ID = "param_id";
     private static final String TAG = "DetailContentFragment";
     @BindView(R.id.iv_big_img)
@@ -79,6 +79,12 @@ public class DetailContentFragment extends BaseFragment {
         return R.layout.fragment_detail_content;
     }
 
+    @Override
+    protected void loadData() {
+        loadContent();
+        loadToolBar();
+    }
+
 
     public interface OnFragmentInteractionListener {
         void refreshToolBar(String commentNumber, String praiseNumber);
@@ -88,11 +94,11 @@ public class DetailContentFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadContent();
-        loadToolBar();
     }
 
+
     private void loadToolBar() {
+        onUpdateToolBar("...", "...");
         if (TextUtils.isEmpty(mStoryId)) {
             throw new NullPointerException("story id is null");
         }

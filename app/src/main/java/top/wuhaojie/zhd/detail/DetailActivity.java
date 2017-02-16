@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -85,6 +86,9 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
 
     @Override
     public void refreshToolBar(String commentNumber, String praiseNumber) {
+        if (mCommentNumber == null || mPraiseNumber == null) return;
+        if (TextUtils.isEmpty(commentNumber) || TextUtils.isEmpty(praiseNumber))
+            throw new NullPointerException("commentNumber is null or praiseNumber is null");
         mCommentNumber.setText(commentNumber);
         mPraiseNumber.setText(praiseNumber);
     }
