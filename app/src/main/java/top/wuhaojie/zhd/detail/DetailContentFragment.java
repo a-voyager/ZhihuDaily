@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +32,8 @@ public class DetailContentFragment extends BaseViewPagerFragment {
     TextView mTvSource;
     @BindView(R.id.tv_title)
     TextView mTvTitle;
+    @BindView(R.id.web_content)
+    WebView mWebContent;
 
     private String mStoryId;
 
@@ -94,6 +99,15 @@ public class DetailContentFragment extends BaseViewPagerFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        WebSettings settings = mWebContent.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setSupportZoom(false);
+        settings.setLoadWithOverviewMode(false);
+        mWebContent.addJavascriptInterface(this, "detail");
+    }
+
+    @JavascriptInterface
+    public void onWebContentImgClick() {
     }
 
 
@@ -156,6 +170,7 @@ public class DetailContentFragment extends BaseViewPagerFragment {
         ImageLoader.get().load(imageUrl, mIvBigImg);
 
         String body = detailMessageResponse.getBody();
+        mWebContent.loadData(body, "text/html", "utf-8");
 
         List<String> css = detailMessageResponse.getCss();
 
