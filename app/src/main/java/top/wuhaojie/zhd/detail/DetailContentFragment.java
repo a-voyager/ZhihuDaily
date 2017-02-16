@@ -170,13 +170,30 @@ public class DetailContentFragment extends BaseViewPagerFragment {
         ImageLoader.get().load(imageUrl, mIvBigImg);
 
         String body = detailMessageResponse.getBody();
-        mWebContent.loadData(body, "text/html", "utf-8");
 
         List<String> css = detailMessageResponse.getCss();
 
         List<String> js = detailMessageResponse.getJs();
 
         String shareUrl = detailMessageResponse.getShare_url();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html>");
+        sb.append("<head>");
+        sb.append("<meta charset=\"utf-8\">");
+        for (String cssItem : css) {
+            sb.append("<link rel=\"stylesheet\" href=\"");
+            sb.append(cssItem);
+            sb.append("\" type=\"text/css\">");
+        }
+        sb.append("</head>");
+        sb.append("<body>");
+        sb.append(body);
+        sb.append("</body>");
+        sb.append("</html>");
+
+
+        mWebContent.loadData(sb.toString(), "text/html; charset=utf-8", "utf-8");
 
     }
 }

@@ -5,14 +5,20 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+
+        <WebView
+            android:layout_marginTop="28dp"
+            android:id="@+id/web_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="240dp">
+            android:layout_height="230dp">
 
             <ImageView
                 android:id="@+id/iv_big_img"
@@ -48,12 +54,6 @@
         </FrameLayout>
 
 
-        <WebView
-            android:id="@+id/web_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-
-    </LinearLayout>
+    </FrameLayout>
 
 </android.support.v4.widget.NestedScrollView>
