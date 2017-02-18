@@ -14,6 +14,7 @@ import com.youth.banner.BannerConfig;
 import java.util.List;
 
 import butterknife.BindView;
+import top.wuhaojie.lib.list.OnLoadMoreListener;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
@@ -62,9 +63,15 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         mMainContentListAdapter = new MainContentListAdapter(mActivity);
         mMainContentListAdapter.setOnItemClickListener(item -> mMainFragmentPresenter.onMainContentListItemClick(item));
 
-        mRvContentMain.setLayoutManager(new LinearLayoutManager(mActivity));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
+        mRvContentMain.setLayoutManager(linearLayoutManager);
         mRvContentMain.setAdapter(mMainContentListAdapter);
-
+        mRvContentMain.addOnScrollListener(new OnLoadMoreListener(linearLayoutManager) {
+            @Override
+            protected void onLoadMore(int page) {
+                mMainFragmentPresenter.onLoadMore(page);
+            }
+        });
 
         mMainFragmentPresenter.onViewCreated(view, savedInstanceState);
     }

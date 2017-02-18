@@ -95,4 +95,8 @@ public class MainFragmentPresenter implements BasePresenter {
         intent.putExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID, String.valueOf(item.id));
         mContext.startActivity(intent);
     }
+
+    public void onLoadMore(int page) {
+        Log.d(TAG, "load more: " + page);
+    }
 }
