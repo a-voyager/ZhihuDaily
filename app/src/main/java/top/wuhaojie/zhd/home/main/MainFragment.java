@@ -97,8 +97,8 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
     @Override
-    public void appendListContent(List<MainContentListAdapter.Item> items) {
-        mMainContentListAdapter.append(items);
+    public void appendListContent(List<MainContentListAdapter.Item> items, String indexTitle) {
+        mMainContentListAdapter.append(items, indexTitle);
     }
 
 

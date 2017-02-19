@@ -1,5 +1,6 @@
 package top.wuhaojie.zhd.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -51,8 +52,15 @@ public class StringUtils {
     }
 
 
+    public static String str2DateWeek(String src) throws ParseException {
+        if (src == null || "".equals(src)) throw new NullPointerException("src == null");
+        Date date = Singleton.DATE_NUMBER_FORMAT.parse(src);
+        return Singleton.DATE_WEEK_FORMAT.format(date);
+    }
+
     private static class Singleton {
         static SimpleDateFormat DATE_NUMBER_FORMAT = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
+        static SimpleDateFormat DATE_WEEK_FORMAT = new SimpleDateFormat("MM月dd日 E", Locale.CHINA);
         static Date DATE = new Date();
     }
 

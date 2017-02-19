@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import top.wuhaojie.zhd.detail.DetailActivity;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
+import top.wuhaojie.zhd.utils.StringUtils;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -117,7 +119,7 @@ public class MainFragmentPresenter implements BasePresenter {
 
             @Override
             public void onNext(BeforeMessageResponse beforeMessageResponse) {
-                Log.d(TAG, "onNext: "+beforeMessageResponse);
+                Log.d(TAG, "onNext: " + beforeMessageResponse);
                 List<BeforeMessageResponse.StoriesBean> stories = beforeMessageResponse.getStories();
                 ArrayList<MainContentListAdapter.Item> list = new ArrayList<>();
                 for (BeforeMessageResponse.StoriesBean story : stories) {
@@ -127,7 +129,13 @@ public class MainFragmentPresenter implements BasePresenter {
                     item.id = story.getId();
                     list.add(item);
                 }
-                mView.appendListContent(list);
+                String date = beforeMessageResponse.getDate();
+                try {
+                    date = StringUtils.str2DateWeek(date);
+                } catch (ParseException e) {
+                    Log.e(TAG, "onNext: ", e);
+                }
+                mView.appendListContent(list, date);
             }
         });
     }

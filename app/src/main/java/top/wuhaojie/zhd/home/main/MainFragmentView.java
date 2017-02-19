@@ -15,7 +15,7 @@ public interface MainFragmentView extends BaseView {
 
     void setListContent(List<MainContentListAdapter.Item> items);
 
-    void appendListContent(List<MainContentListAdapter.Item> items);
+    void appendListContent(List<MainContentListAdapter.Item> items, String indexTitle);
 
     void setBanner(List<MainContentListAdapter.Item> items);
 }
