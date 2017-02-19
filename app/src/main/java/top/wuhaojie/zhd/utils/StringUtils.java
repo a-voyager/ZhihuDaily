@@ -34,7 +34,7 @@ public class StringUtils {
 
     public static String dateString(Date date) {
         if (date == null) throw new NullPointerException("date == null");
-        return Singleton.DATE_NUMBER_FORMATOR.format(date);
+        return Singleton.DATE_NUMBER_FORMAT.format(date);
     }
 
 
@@ -52,7 +52,7 @@ public class StringUtils {
 
 
     private static class Singleton {
-        static SimpleDateFormat DATE_NUMBER_FORMATOR = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
+        static SimpleDateFormat DATE_NUMBER_FORMAT = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
         static Date DATE = new Date();
     }
 
