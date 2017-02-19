@@ -21,7 +21,7 @@ public class StringUtils {
     public static String bigNumber(int number) {
         if (number < 0) return "0";
         if (number < 1000) return String.valueOf(number);
-        if (number > 999 * 1000) return "999K+";
+        if (number > 999 * 1000) return "999K";
         double v = number / 1000.0;
         String raw = String.valueOf(v);
         if (raw.length() <= 3) return raw + "K";
@@ -29,7 +29,7 @@ public class StringUtils {
         if (substring.endsWith(".")) {
             substring = substring.substring(0, 2);
         }
-        return substring + "K+";
+        return substring + "K";
     }
 
 

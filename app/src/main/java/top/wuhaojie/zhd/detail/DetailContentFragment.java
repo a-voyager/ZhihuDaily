@@ -22,6 +22,7 @@ import top.wuhaojie.zhd.base.BaseViewPagerFragment;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
+import top.wuhaojie.zhd.utils.StringUtils;
 
 public class DetailContentFragment extends BaseViewPagerFragment {
     private static final String ARG_STORY_ID = "param_id";
@@ -131,7 +132,9 @@ public class DetailContentFragment extends BaseViewPagerFragment {
             public void onNext(StoryExtraResponse storyExtraResponse) {
                 int comments = storyExtraResponse.getComments();
                 int popularity = storyExtraResponse.getPopularity();
-                onUpdateToolBar(comments + "", popularity + "");
+                String strComm = StringUtils.bigNumber(comments);
+                String strPopu = StringUtils.bigNumber(popularity);
+                onUpdateToolBar(strComm, strPopu);
             }
         });
     }
