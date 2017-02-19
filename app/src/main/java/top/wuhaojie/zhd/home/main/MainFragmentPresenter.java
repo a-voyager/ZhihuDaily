@@ -54,19 +54,22 @@ public class MainFragmentPresenter implements BasePresenter {
             public void onNext(LatestMessageResponse latestMessageResponse) {
                 Log.d(TAG, "onNext: Message = " + latestMessageResponse);
                 List<LatestMessageResponse.TopStoriesBean> topStories = latestMessageResponse.getTop_stories();
-                ArrayList<String> images = new ArrayList<>();
-                ArrayList<String> titles = new ArrayList<>();
+//                ArrayList<String> images = new ArrayList<>();
+//                ArrayList<String> titles = new ArrayList<>();
+
+                ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
                 for (LatestMessageResponse.TopStoriesBean story : topStories) {
-                    String image = story.getImage();
-                    String title = story.getTitle();
-                    images.add(image);
-                    titles.add(title);
+                    MainContentListAdapter.Item item = new MainContentListAdapter.Item();
+                    item.imgUrl = story.getImage();
+                    item.title = story.getTitle();
+                    item.id = story.getId();
+                    items.add(item);
                 }
-                mView.setBanner(images, titles);
+                mView.setBanner(items);
 
                 List<LatestMessageResponse.StoriesBean> stories = latestMessageResponse.getStories();
                 mStoryIds = new ArrayList<>();
-                ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
+                items.clear();
                 for (LatestMessageResponse.StoriesBean st : stories) {
                     MainContentListAdapter.Item item = new MainContentListAdapter.Item();
                     item.title = st.getTitle();
@@ -98,5 +101,6 @@ public class MainFragmentPresenter implements BasePresenter {
 
     public void onLoadMore(int page) {
         Log.d(TAG, "load more: " + page);
+        loadData();
     }
 }

@@ -13,23 +13,17 @@ import android.support.v7.widget.RecyclerView;
 public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 
 
+    private static final String TAG = "OnLoadMoreListener";
     private boolean mLoaded = true;
     private int mLastTotalCount = 0;
-    private int mCurrPage = 0;
-    private LinearLayoutManager mLayoutManager;
-    private boolean mIsScrolling;
-
-    public OnLoadMoreListener(LinearLayoutManager layoutManager) {
-        mLayoutManager = layoutManager;
-    }
+    private int mCurrPage = -1;
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         int visibleCount = recyclerView.getChildCount();
-//        mLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        if (!mIsScrolling) return;
-        int totalCount = mLayoutManager.getItemCount();
-        int firstVisiblePosition = mLayoutManager.findFirstVisibleItemPosition();
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int totalCount = layoutManager.getItemCount();
+        int firstVisiblePosition = layoutManager.findFirstVisibleItemPosition();
 
         if (mLoaded && mLastTotalCount < totalCount) {
             // 如果 已经加载完毕
@@ -48,10 +42,10 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 
     }
 
+
     @Override
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         super.onScrollStateChanged(recyclerView, newState);
-        mIsScrolling = (newState != RecyclerView.SCROLL_STATE_IDLE);
     }
 
     protected abstract void onLoadMore(int page);

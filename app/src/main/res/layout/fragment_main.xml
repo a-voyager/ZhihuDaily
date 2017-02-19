@@ -9,31 +9,21 @@
     android:layout_height="match_parent"
     tools:context="top.wuhaojie.zhd.home.main.MainFragment">
 
-    <android.support.v4.widget.NestedScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <com.youth.banner.Banner
-                android:id="@+id/banner_hot"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"/>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_content_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false">
-
-            </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
 
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 
 </android.support.v4.widget.SwipeRefreshLayout>

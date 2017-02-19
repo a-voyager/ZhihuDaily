@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import top.wuhaojie.lib.image.ImageLoader;
 import top.wuhaojie.zhd.R;
+import top.wuhaojie.zhd.utils.BannerImageLoader;
 
 /**
  * Created by wuhaojie on 17-2-11.
@@ -24,6 +28,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
 
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_FOOTER = 1;
+    private static final int TYPE_HEADER = 2;
     private final LayoutInflater mLayoutInflater;
 
 
@@ -33,7 +38,9 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         public int id;
     }
 
-    private List<Item> mList = new ArrayList<>();
+    private List<Item> mStoryList = new ArrayList<>();
+    private List<Item> mBannerList = new ArrayList<>();
+
     private Context mContext;
 
     public MainContentListAdapter(Context context) {
@@ -41,16 +48,23 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         mLayoutInflater = LayoutInflater.from(context);
     }
 
-    public void setList(List<Item> list) {
-        mList.clear();
-        mList.addAll(list);
+    public void setStoryList(List<Item> storyList) {
+        mStoryList.clear();
+        mStoryList.addAll(storyList);
         notifyDataSetChanged();
     }
 
+
+    public void setBannerList(List<Item> bannerList) {
+        mBannerList.clear();
+        mBannerList.addAll(bannerList);
+        notifyItemChanged(0);
+    }
+
     public void append(List<Item> list) {
-        int oldIndex = mList.size() - 1;
+        int oldIndex = mStoryList.size() - 1;
         int count = list.size();
-        mList.addAll(list);
+        mStoryList.addAll(list);
         notifyItemRangeInserted(oldIndex, count);
     }
 
@@ -59,9 +73,12 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         if (viewType == TYPE_NORMAL) {
             View v = mLayoutInflater.inflate(R.layout.item_normal_list_main, parent, false);
             return new NormalViewHolder(v);
-        } else {
+        } else if (viewType == TYPE_FOOTER) {
             View v = mLayoutInflater.inflate(R.layout.item_footer_list_main, parent, false);
             return new FooterViewHolder(v);
+        } else {
+            View v = mLayoutInflater.inflate(R.layout.item_header_list_main, parent, false);
+            return new HeaderViewHolder(v);
         }
     }
 
@@ -70,20 +87,24 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         int itemViewType = getItemViewType(position);
         if (itemViewType == TYPE_NORMAL) {
             NormalViewHolder h = (NormalViewHolder) holder;
-            h.setView(mList.get(position));
+            h.setView(mStoryList.get(position - 1));
+        }else if(itemViewType ==TYPE_HEADER){
+            HeaderViewHolder h = (HeaderViewHolder) holder;
+            h.setBannerListItem(mBannerList);
         }
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mList.size()) return TYPE_FOOTER;
+        if (position == 0) return TYPE_HEADER;
+        if (position == mStoryList.size() + 1) return TYPE_FOOTER;
         return TYPE_NORMAL;
     }
 
     @Override
     public int getItemCount() {
-        return mList.size() + 1;
+        return mStoryList.size() + 2;
     }
 
 
@@ -109,7 +130,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
                 if (mOnItemClickListener != null)
-                    mOnItemClickListener.onItemClick(mList.get(getAdapterPosition()));
+                    mOnItemClickListener.onItemClick(mStoryList.get(getAdapterPosition()));
             });
         }
 
@@ -127,5 +148,44 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
     }
+
+
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.banner_hot)
+        Banner mBanner;
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+            mBanner
+                    .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE)
+                    .setDelayTime(4000)
+                    .setImageLoader(new BannerImageLoader())
+                    .isAutoPlay(true)
+                    .start();
+            setBannerListItem(mBannerList);
+        }
+
+        void setBannerListItem(List<Item> list) {
+
+            ArrayList<String> images = new ArrayList<>();
+            ArrayList<String> titles = new ArrayList<>();
+            ArrayList<String> ids = new ArrayList<>();
+
+            for (Item item : list) {
+                images.add(item.imgUrl);
+                titles.add(item.title);
+                ids.add(item.id + "");
+            }
+
+            mBanner
+                    .setImages(images)
+                    .setBannerTitles(titles)
+                    .start();
+        }
+
+    }
+
 
 }

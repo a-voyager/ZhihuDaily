@@ -8,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,7 +15,6 @@ import top.wuhaojie.lib.list.OnLoadMoreListener;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
-import top.wuhaojie.zhd.utils.BannerImageLoader;
 
 import static android.content.ContentValues.TAG;
 
@@ -28,8 +24,6 @@ import static android.content.ContentValues.TAG;
 public class MainFragment extends BaseFragment implements MainFragmentView {
 
     MainFragmentPresenter mMainFragmentPresenter;
-    @BindView(R.id.banner_hot)
-    Banner mBannerHot;
     @BindView(R.id.rv_content_main)
     RecyclerView mRvContentMain;
     @BindView(R.id.srf_main)
@@ -52,13 +46,6 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 
         mSrfMain.setOnRefreshListener(() -> mMainFragmentPresenter.onRefresh());
 
-        mBannerHot
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE)
-                .setDelayTime(4000)
-                .setImageLoader(new BannerImageLoader())
-                .isAutoPlay(true)
-                .start();
-
 
         mMainContentListAdapter = new MainContentListAdapter(mActivity);
         mMainContentListAdapter.setOnItemClickListener(item -> mMainFragmentPresenter.onMainContentListItemClick(item));
@@ -66,7 +53,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         mRvContentMain.setLayoutManager(linearLayoutManager);
         mRvContentMain.setAdapter(mMainContentListAdapter);
-        mRvContentMain.addOnScrollListener(new OnLoadMoreListener(linearLayoutManager) {
+        mRvContentMain.addOnScrollListener(new OnLoadMoreListener() {
             @Override
             protected void onLoadMore(int page) {
                 mMainFragmentPresenter.onLoadMore(page);
@@ -79,13 +66,13 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void onStart() {
         super.onStart();
-        mBannerHot.startAutoPlay();
+//        mBannerHot.startAutoPlay();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mBannerHot.stopAutoPlay();
+//        mBannerHot.stopAutoPlay();
     }
 
 
@@ -95,11 +82,8 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
     @Override
-    public void setBanner(List<String> images, List<String> titles) {
-        mBannerHot
-                .setImages(images)
-                .setBannerTitles(titles)
-                .start();
+    public void setBanner(List<MainContentListAdapter.Item> list) {
+        mMainContentListAdapter.setBannerList(list);
     }
 
     @Override
@@ -109,6 +93,13 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 
     @Override
     public void setListContent(List<MainContentListAdapter.Item> items) {
-        mMainContentListAdapter.setList(items);
+        mMainContentListAdapter.setStoryList(items);
     }
+
+    @Override
+    public void appendListContent(List<MainContentListAdapter.Item> items) {
+        mMainContentListAdapter.append(items);
+    }
+
+
 }

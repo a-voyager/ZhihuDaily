@@ -10,9 +10,12 @@ import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
  */
 
 public interface MainFragmentView extends BaseView {
-    void setBanner(List<String> images, List<String> titles);
 
     void loadCompleted();
 
     void setListContent(List<MainContentListAdapter.Item> items);
+
+    void appendListContent(List<MainContentListAdapter.Item> items);
+
+    void setBanner(List<MainContentListAdapter.Item> items);
 }
