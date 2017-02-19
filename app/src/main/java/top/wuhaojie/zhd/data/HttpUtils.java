@@ -5,9 +5,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import top.wuhaojie.lib.http.RetrofitHttpHelper;
 import top.wuhaojie.zhd.data.api.APIService;
+import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
+import top.wuhaojie.zhd.utils.StringUtils;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -58,6 +60,17 @@ public class HttpUtils {
         mRetrofitHttpHelper
                 .getService()
                 .getStoryExtra(id)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public static void getBeforeMessage(int page, Subscriber<BeforeMessageResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getBeforeMessage(StringUtils.dateString(page))
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -4,6 +4,7 @@ import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
+import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
@@ -26,5 +27,8 @@ public interface APIService {
 
     @GET("story-extra/{id}")
     Observable<StoryExtraResponse> getStoryExtra(@Path("id") String id);
+
+    @GET("news/before/{date}")
+    Observable<BeforeMessageResponse> getBeforeMessage(@Path("date") String date);
 
 }

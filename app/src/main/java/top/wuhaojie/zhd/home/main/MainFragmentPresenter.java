@@ -15,6 +15,7 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 import top.wuhaojie.zhd.constant.Constants;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.detail.DetailActivity;
+import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
 
@@ -38,7 +39,7 @@ public class MainFragmentPresenter implements BasePresenter {
         mView = (MainFragmentView) view;
     }
 
-    private void loadData() {
+    private void loadTodayData() {
         HttpUtils.getLatestMessages(new Subscriber<LatestMessageResponse>() {
             @Override
             public void onCompleted() {
@@ -54,8 +55,6 @@ public class MainFragmentPresenter implements BasePresenter {
             public void onNext(LatestMessageResponse latestMessageResponse) {
                 Log.d(TAG, "onNext: Message = " + latestMessageResponse);
                 List<LatestMessageResponse.TopStoriesBean> topStories = latestMessageResponse.getTop_stories();
-//                ArrayList<String> images = new ArrayList<>();
-//                ArrayList<String> titles = new ArrayList<>();
 
                 ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
                 for (LatestMessageResponse.TopStoriesBean story : topStories) {
@@ -85,11 +84,11 @@ public class MainFragmentPresenter implements BasePresenter {
     }
 
     public void onRefresh() {
-        loadData();
+        loadTodayData();
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        loadData();
+        loadTodayData();
     }
 
     public void onMainContentListItemClick(MainContentListAdapter.Item item) {
@@ -101,6 +100,35 @@ public class MainFragmentPresenter implements BasePresenter {
 
     public void onLoadMore(int page) {
         Log.d(TAG, "load more: " + page);
-        loadData();
+        loadMoreDate(page);
+    }
+
+    private void loadMoreDate(int page) {
+        HttpUtils.getBeforeMessage(page, new Subscriber<BeforeMessageResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(BeforeMessageResponse beforeMessageResponse) {
+                Log.d(TAG, "onNext: "+beforeMessageResponse);
+                List<BeforeMessageResponse.StoriesBean> stories = beforeMessageResponse.getStories();
+                ArrayList<MainContentListAdapter.Item> list = new ArrayList<>();
+                for (BeforeMessageResponse.StoriesBean story : stories) {
+                    MainContentListAdapter.Item item = new MainContentListAdapter.Item();
+                    item.imgUrl = story.getImages().get(0);
+                    item.title = story.getTitle();
+                    item.id = story.getId();
+                    list.add(item);
+                }
+                mView.appendListContent(list);
+            }
+        });
     }
 }
