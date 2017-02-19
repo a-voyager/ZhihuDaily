@@ -26,6 +26,11 @@
             android:label=""
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".image.ImageViewerActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

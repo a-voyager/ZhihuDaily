@@ -46,6 +46,7 @@ public abstract class ImageLoader {
 
     public static final int OPTION_CENTER_CROP = FLAG << 1;
     public static final int OPTION_CIRCLE_CROP = FLAG << 2;
+    public static final int OPTION_FIT_CENTER = FLAG << 3;
 
     protected final boolean hasOption(int option) {
         // ( 0011 & 0001 ) ^ 0001 == 0 ok

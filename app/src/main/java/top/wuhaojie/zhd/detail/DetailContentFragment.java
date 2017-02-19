@@ -1,6 +1,7 @@
 package top.wuhaojie.zhd.detail;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,9 +21,11 @@ import rx.Subscriber;
 import top.wuhaojie.lib.image.ImageLoader;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseViewPagerFragment;
+import top.wuhaojie.zhd.constant.Constants;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
+import top.wuhaojie.zhd.image.ImageViewerActivity;
 import top.wuhaojie.zhd.utils.StringUtils;
 
 public class DetailContentFragment extends BaseViewPagerFragment {
@@ -105,10 +109,15 @@ public class DetailContentFragment extends BaseViewPagerFragment {
         settings.setSupportZoom(false);
         settings.setLoadWithOverviewMode(false);
         mWebContent.addJavascriptInterface(this, "detail");
+        mWebContent.setWebViewClient(new DetailWebClient());
     }
 
     @JavascriptInterface
-    public void onWebContentImgClick() {
+    public void onWebContentImgClick(String src) {
+        Log.d(TAG, "onWebContentImgClick: " + src);
+        Intent intent = new Intent(mActivity, ImageViewerActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_IMAGE_URL, src);
+        startActivity(intent);
     }
 
 
@@ -199,4 +208,24 @@ public class DetailContentFragment extends BaseViewPagerFragment {
         mWebContent.loadData(sb.toString(), "text/html; charset=utf-8", "utf-8");
 
     }
+
+
+    private class DetailWebClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            view.loadUrl("javascript:(function(){" +
+                    "var objs = document.getElementsByTagName(\"img\"); " +
+                    "for(var i=0;i<objs.length;i++)  " +
+                    "{"
+                    + "    objs[i].onclick=function()  " +
+                    "    {  "
+                    + "        window.detail.onWebContentImgClick(this.src);  " +
+                    "    }  " +
+                    "}" +
+                    "})()");
+        }
+    }
+
+
 }

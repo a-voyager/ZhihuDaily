@@ -56,6 +56,7 @@ public class GlideImageLoader extends ImageLoader {
         DrawableRequestBuilder<String> builder = mRequestManager
                 .load(uri);
         if (hasOption(OPTION_CENTER_CROP)) builder.centerCrop();
+        else if (hasOption(OPTION_FIT_CENTER)) builder.fitCenter();
         if (hasOption(OPTION_CIRCLE_CROP)) builder.transform(GLIDE_CIRCLE_TRANSFORM);
         builder.into(iv);
     }
