@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="常规">
+
+        <CheckBoxPreference
+            android:summary="仅 WiFi 下可用，自动下载最新内容"
+            android:title="自动离线下载"/>
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
