@@ -18,4 +18,6 @@ public interface MainFragmentView extends BaseView {
     void appendListContent(List<MainContentListAdapter.Item> items, String indexTitle);
 
     void setBanner(List<MainContentListAdapter.Item> items);
+
+    void resetPage();
 }

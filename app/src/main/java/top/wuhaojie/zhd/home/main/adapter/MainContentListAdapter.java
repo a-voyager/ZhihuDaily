@@ -48,6 +48,8 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
 
     {
         mIndexMap.put(1, "今日热文");
+        mStoryList.add(new Item());
+        mStoryList.add(new Item());
     }
 
     private Context mContext;
@@ -59,6 +61,10 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
 
     public void setStoryList(List<Item> storyList) {
         mStoryList.clear();
+        mIndexMap.clear();
+        mIndexMap.put(1, "今日热文");
+        mStoryList.add(new Item());
+        mStoryList.add(new Item());
         mStoryList.addAll(storyList);
         notifyDataSetChanged();
     }
@@ -76,6 +82,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         int count = list.size();
         mIndexMap.put(oldIndex, indexTitle);
         notifyDataSetChanged();
+        mStoryList.add(new Item());
         mStoryList.addAll(list);
         notifyDataSetChanged();
     }
@@ -101,16 +108,8 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof NormalViewHolder) {
             NormalViewHolder h = (NormalViewHolder) holder;
-            int count = 0;
-            for (int i = 0; i < position; i++) {
-                String s = mIndexMap.get(i);
-                if (s != null) count++;
-            }
-            int i = position - 1 - count;
-            if (i > 0 && i < mStoryList.size()) {
-                Item item = mStoryList.get(i);
-                h.setView(item);
-            }
+            Item item = mStoryList.get(position);
+            h.setView(item);
         } else if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder h = (HeaderViewHolder) holder;
             h.setBannerListItem(mBannerList);
@@ -133,7 +132,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return mStoryList.size() + mIndexMap.size() + 2;
+        return mStoryList.size() + mIndexMap.size() + 2 - mIndexMap.size() - 1;
     }
 
 

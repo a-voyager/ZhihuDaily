@@ -86,6 +86,7 @@ public class MainFragmentPresenter implements BasePresenter {
     }
 
     public void onRefresh() {
+        mView.resetPage();
         loadTodayData();
     }
 

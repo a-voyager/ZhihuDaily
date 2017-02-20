@@ -48,5 +48,12 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
         super.onScrollStateChanged(recyclerView, newState);
     }
 
+
+    public void resetPage() {
+        mCurrPage = -1;
+        mLastTotalCount = 0;
+        mLoaded = true;
+    }
+
     protected abstract void onLoadMore(int page);
 }

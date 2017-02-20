@@ -29,6 +29,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @BindView(R.id.srf_main)
     SwipeRefreshLayout mSrfMain;
     private MainContentListAdapter mMainContentListAdapter;
+    private OnLoadMoreListener mOnLoadMoreListener;
 
     public MainFragment() {
         Log.d(TAG, "MainFragment: new Instance");
@@ -53,12 +54,13 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         mRvContentMain.setLayoutManager(linearLayoutManager);
         mRvContentMain.setAdapter(mMainContentListAdapter);
-        mRvContentMain.addOnScrollListener(new OnLoadMoreListener() {
+        mOnLoadMoreListener = new OnLoadMoreListener() {
             @Override
             protected void onLoadMore(int page) {
                 mMainFragmentPresenter.onLoadMore(page);
             }
-        });
+        };
+        mRvContentMain.addOnScrollListener(mOnLoadMoreListener);
 
         mMainFragmentPresenter.onViewCreated(view, savedInstanceState);
     }
@@ -84,6 +86,11 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void setBanner(List<MainContentListAdapter.Item> list) {
         mMainContentListAdapter.setBannerList(list);
+    }
+
+    @Override
+    public void resetPage() {
+        if (mOnLoadMoreListener != null) mOnLoadMoreListener.resetPage();
     }
 
     @Override
