@@ -3,9 +3,7 @@
 
 # 效果图
 
-![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/01.png "效果图") ![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/02.png "效果图")
-<br>
-![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/03.png "效果图") ![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/04.png "效果图")
+![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/img.png "效果图")
 
 # 开源许可
     The MIT License (MIT)
