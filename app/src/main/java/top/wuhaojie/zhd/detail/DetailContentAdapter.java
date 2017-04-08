@@ -21,6 +21,10 @@ public class DetailContentAdapter extends FragmentStatePagerAdapter {
         notifyDataSetChanged();
     }
 
+    public String getStoryId(int currItem) {
+        return mStoryIds.get(currItem);
+    }
+
     public DetailContentAdapter(FragmentManager fm) {
         super(fm);
     }

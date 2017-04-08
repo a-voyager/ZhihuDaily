@@ -23,6 +23,7 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
     ViewPager mVpDetailContent;
     private TextView mCommentNumber;
     private TextView mPraiseNumber;
+    private DetailContentAdapter mDetailContentAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,13 +34,13 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
 
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DetailContentAdapter detailContentAdapter = new DetailContentAdapter(getSupportFragmentManager());
-        mVpDetailContent.setAdapter(detailContentAdapter);
+        mDetailContentAdapter = new DetailContentAdapter(getSupportFragmentManager());
+        mVpDetailContent.setAdapter(mDetailContentAdapter);
 
         Intent intent = getIntent();
         if (intent != null) {
             ArrayList<String> list = intent.getStringArrayListExtra(Constants.INTENT_EXTRA_STORY_IDS);
-            detailContentAdapter.setStoryIds(list);
+            mDetailContentAdapter.setStoryIds(list);
 
             String currId = intent.getStringExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID);
             for (int i = 0; i < list.size(); i++) {
@@ -63,11 +64,13 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         MenuItem comment = menu.findItem(R.id.action_comment);
         comment.setActionView(R.layout.action_comment);
-        comment.setOnMenuItemClickListener(item -> mDetailPresenter.onCommentMenuItemClick(item));
+        comment.getActionView().setOnClickListener(v -> mDetailPresenter.onCommentMenuItemClick(comment));
+//        comment.setOnMenuItemClickListener(item -> mDetailPresenter.onCommentMenuItemClick(item));
         mCommentNumber = (TextView) comment.getActionView().findViewById(R.id.tv_comment_number);
         MenuItem praise = menu.findItem(R.id.action_praise);
         praise.setActionView(R.layout.action_praise);
-        praise.setOnMenuItemClickListener(item -> mDetailPresenter.onPraiseMenuItemClick(item));
+        praise.getActionView().setOnClickListener(v -> mDetailPresenter.onPraiseMenuItemClick(praise));
+//        praise.setOnMenuItemClickListener(item -> mDetailPresenter.onPraiseMenuItemClick(item));
         mPraiseNumber = (TextView) praise.getActionView().findViewById(R.id.tv_praise_number);
         return super.onCreateOptionsMenu(menu);
     }
@@ -85,7 +88,14 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
     }
 
     @Override
+    public String currStoryId() {
+        int currentItem = mVpDetailContent.getCurrentItem();
+        return mDetailContentAdapter.getStoryId(currentItem);
+    }
+
+    @Override
     public void refreshToolBar(String commentNumber, String praiseNumber) {
+        mDetailPresenter.refreshToolBar(commentNumber, praiseNumber);
         if (mCommentNumber == null || mPraiseNumber == null) return;
         if (TextUtils.isEmpty(commentNumber) || TextUtils.isEmpty(praiseNumber))
             throw new NullPointerException("commentNumber is null or praiseNumber is null");

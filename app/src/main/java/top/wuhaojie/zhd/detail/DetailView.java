@@ -8,4 +8,6 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 public interface DetailView extends BaseView {
     void back();
+
+    String currStoryId();
 }

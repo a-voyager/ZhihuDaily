@@ -36,6 +36,12 @@
             android:label="设置"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".comment.CommentActivity"
+            android:label="@string/title_activity_comment"
+            android:parentActivityName=".detail.DetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
