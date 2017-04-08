@@ -8,6 +8,8 @@ import top.wuhaojie.zhd.data.api.APIService;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
+import top.wuhaojie.zhd.entities.LongCommentResponse;
+import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 import top.wuhaojie.zhd.utils.StringUtils;
 
@@ -71,6 +73,28 @@ public class HttpUtils {
         mRetrofitHttpHelper
                 .getService()
                 .getBeforeMessage(StringUtils.dateString(page))
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public static void getLongComment(String id, Subscriber<LongCommentResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getLongComment(id)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public static void getShortComment(String id, Subscriber<ShortCommentResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getShortComment(id)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

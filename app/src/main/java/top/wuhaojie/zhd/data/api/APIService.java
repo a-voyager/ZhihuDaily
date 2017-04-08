@@ -7,6 +7,8 @@ import rx.Observable;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
+import top.wuhaojie.zhd.entities.LongCommentResponse;
+import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 
 /**
@@ -30,5 +32,11 @@ public interface APIService {
 
     @GET("news/before/{date}")
     Observable<BeforeMessageResponse> getBeforeMessage(@Path("date") String date);
+
+    @GET("story/{id}/long-comments")
+    Observable<LongCommentResponse> getLongComment(@Path("id") String id);
+
+    @GET("story/{id}/short-comments")
+    Observable<ShortCommentResponse> getShortComment(@Path("id") String id);
 
 }

@@ -13,4 +13,9 @@ public interface CommentView extends BaseView {
     void updateToolbar(String commentNumber);
 
     void back();
+
+    void showWaitDialog();
+
+    void dismissWaitDialog();
+
 }

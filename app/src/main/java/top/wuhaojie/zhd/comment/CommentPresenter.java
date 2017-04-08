@@ -3,11 +3,15 @@ package top.wuhaojie.zhd.comment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import rx.Subscriber;
 import top.wuhaojie.zhd.base.interfaces.BasePresenter;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
 import top.wuhaojie.zhd.constant.Constants;
+import top.wuhaojie.zhd.data.HttpUtils;
+import top.wuhaojie.zhd.entities.LongCommentResponse;
 
 /**
  * Author: wuhaojie
@@ -38,6 +42,24 @@ public class CommentPresenter implements BasePresenter {
             mView.updateToolbar(commentNumber);
             mStoryId = intent.getStringExtra(Constants.INTENT_EXTRA_STORY_ID);
         }
+        mView.showWaitDialog();
+        HttpUtils.getLongComment(mStoryId, new Subscriber<LongCommentResponse>() {
+            @Override
+            public void onCompleted() {
+                mView.dismissWaitDialog();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mView.dismissWaitDialog();
+            }
+
+            @Override
+            public void onNext(LongCommentResponse longCommentResponse) {
+                Log.d(TAG, "onNext: " + longCommentResponse);
+            }
+        });
+
 
     }
 
