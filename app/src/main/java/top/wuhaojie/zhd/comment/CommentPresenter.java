@@ -42,6 +42,7 @@ public class CommentPresenter implements BasePresenter {
     private String mStoryId;
     private String mCommentNumber;
     private int mLastSize;
+    private static final String[] mMenuItems = new String[]{"赞同", "举报", "复制", "回复"};
 
     public CommentPresenter(Context context) {
         mContext = context;
@@ -175,5 +176,28 @@ public class CommentPresenter implements BasePresenter {
         mLastSize = items.size();
         // ui
         mView.appendList(items);
+    }
+
+    public void OnCommentClick(View v, int type, String id) {
+        switch (type) {
+            case TYPE_LONG_COMMENT: // same as short
+            case TYPE_SHORT_COMMENT:
+                mView.showContextDialog(mMenuItems, type, id);
+                break;
+        }
+    }
+
+    public void onContextDialogClick(int which) {
+//        "赞同", "举报", "复制", "回复"
+        switch (which) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
 }

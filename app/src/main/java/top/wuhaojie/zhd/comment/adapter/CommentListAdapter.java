@@ -187,10 +187,20 @@ public class CommentListAdapter extends RecyclerView.Adapter {
         void onClick(View v, boolean folded);
     }
 
+    public interface OnCommentClickListner {
+        void onClick(View v, int type, String id);
+    }
+
     private OnIndexClickListener mOnIndexClickListener;
+
+    private OnCommentClickListner mOnCommentClickListner;
 
     public void setOnIndexClickListener(OnIndexClickListener onIndexClickListener) {
         mOnIndexClickListener = onIndexClickListener;
+    }
+
+    public void setOnCommentClickListner(OnCommentClickListner onCommentClickListner) {
+        mOnCommentClickListner = onCommentClickListner;
     }
 
     class IndexHolder extends RecyclerView.ViewHolder {
@@ -258,6 +268,10 @@ public class CommentListAdapter extends RecyclerView.Adapter {
         LongCommentHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                if (mOnCommentClickListner != null)
+                    mOnCommentClickListner.onClick(v, TYPE_LONG_COMMENT, ((LongCommentData) mList.get(getAdapterPosition()).data).id);
+            });
         }
 
         void setView(LongCommentData data) {
@@ -286,6 +300,10 @@ public class CommentListAdapter extends RecyclerView.Adapter {
         ShortCommentHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                if (mOnCommentClickListner != null)
+                    mOnCommentClickListner.onClick(v, TYPE_SHORT_COMMENT, ((ShortCommentData) mList.get(getAdapterPosition()).data).id);
+            });
         }
 
         public void setView(ShortCommentData data) {

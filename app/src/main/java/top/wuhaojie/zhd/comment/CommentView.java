@@ -26,4 +26,6 @@ public interface CommentView extends BaseView {
     void appendList(ArrayList<CommentListAdapter.Item<?>> items);
 
     void removeList(int lastSize);
+
+    void showContextDialog(String[] items, int type, String id);
 }

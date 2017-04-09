@@ -3,9 +3,11 @@ package top.wuhaojie.zhd.comment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import top.wuhaojie.zhd.comment.adapter.CommentListAdapter;
 public class CommentActivity extends BaseActivity implements CommentView {
 
 
+    private static final String TAG = "CommentActivity";
     @BindView(R.id.rv_content_comment)
     RecyclerView mRvContentComment;
     private CommentPresenter mPresenter;
@@ -35,12 +38,20 @@ public class CommentActivity extends BaseActivity implements CommentView {
 
         mCommentListAdapter = new CommentListAdapter(this);
         mCommentListAdapter.setOnIndexClickListener((v, folded) -> mPresenter.onIndexClickListener(v, folded));
+        mCommentListAdapter.setOnCommentClickListner((v, type, id) -> mPresenter.OnCommentClick(v, type, id));
 
         mRvContentComment.setLayoutManager(new LinearLayoutManager(this));
         mRvContentComment.setAdapter(mCommentListAdapter);
         mRvContentComment.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         mPresenter.onCreate(savedInstanceState, getIntent());
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_comment, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -93,6 +104,14 @@ public class CommentActivity extends BaseActivity implements CommentView {
     @Override
     public void removeList(int lastSize) {
         mCommentListAdapter.removeList(lastSize);
+    }
+
+    @Override
+    public void showContextDialog(String[] items, int type, String id) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setItems(items, (d, which) -> mPresenter.onContextDialogClick(which))
+                .create();
+        dialog.show();
     }
 
     private void checkAndInitProgressDialog() {
