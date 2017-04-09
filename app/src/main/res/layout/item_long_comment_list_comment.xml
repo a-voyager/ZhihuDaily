@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/iv_avatar_comment"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/comment_avatar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Jennifer"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/comment_vote"/>
+
+            <TextView
+                android:id="@+id/tv_likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:textSize="12sp"
+                tools:text="28"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_content_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#000"
+            tools:text="文章说的不仅仅是演员的年纪，而是影视作品缺乏中间年龄段女性的美。她们可以承担家庭主妇，妻子，公司同事，保洁阿姨，姐姐妹妹，却很少单纯以一个女性知性，性感，独立，智慧为主题描述一个个体的。或许有，但相比国外，或者男性，这种经典荧幕形象太少。我们认为女人过了30是开始老去的，甚至妖魔化大龄单身女性，妖魔化女博士，妖魔化单身妈妈，这些单一的刻板印象该去掉了。"/>
+
+
+        <TextView
+            android:id="@+id/tv_time_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="10sp"
+            tools:text="04-09 10:56"/>
+
+    </LinearLayout>
+
+</LinearLayout>

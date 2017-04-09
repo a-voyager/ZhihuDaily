@@ -15,6 +15,12 @@ import top.wuhaojie.zhd.utils.StringUtils;
 
 public class StringUtilsTest {
     @Test
+    public void dateTimeString() throws Exception {
+        String s = StringUtils.dateTimeString(1491706621);
+        System.out.println(s);
+    }
+
+    @Test
     public void str2DateWeek() throws Exception {
         String s = StringUtils.str2DateWeek("20170215");
         System.out.println(s);

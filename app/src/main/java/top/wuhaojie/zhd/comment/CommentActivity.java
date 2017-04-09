@@ -3,16 +3,26 @@ package top.wuhaojie.zhd.comment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseActivity;
+import top.wuhaojie.zhd.comment.adapter.CommentListAdapter;
 
 public class CommentActivity extends BaseActivity implements CommentView {
 
 
+    @BindView(R.id.rv_content_comment)
+    RecyclerView mRvContentComment;
     private CommentPresenter mPresenter;
     private ProgressDialog mProgressDialog;
+    private CommentListAdapter mCommentListAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,6 +33,12 @@ public class CommentActivity extends BaseActivity implements CommentView {
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mCommentListAdapter = new CommentListAdapter(this);
+        mCommentListAdapter.setOnIndexClickListener((v, folded) -> mPresenter.onIndexClickListener(v, folded));
+
+        mRvContentComment.setLayoutManager(new LinearLayoutManager(this));
+        mRvContentComment.setAdapter(mCommentListAdapter);
+        mRvContentComment.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         mPresenter.onCreate(savedInstanceState, getIntent());
     }
@@ -59,6 +75,24 @@ public class CommentActivity extends BaseActivity implements CommentView {
     public void dismissWaitDialog() {
         checkAndInitProgressDialog();
         mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void updateList(ArrayList<CommentListAdapter.Item<?>> items) {
+        mCommentListAdapter.setList(items);
+    }
+
+    @Override
+    public void appendList(ArrayList<CommentListAdapter.Item<?>> items) {
+        int lastPosition = mCommentListAdapter.getListSize() - 1;
+        mCommentListAdapter.appendList(items);
+        int visibleChildCount = mRvContentComment.getChildCount();
+        mRvContentComment.smoothScrollToPosition(lastPosition + visibleChildCount);
+    }
+
+    @Override
+    public void removeList(int lastSize) {
+        mCommentListAdapter.removeList(lastSize);
     }
 
     private void checkAndInitProgressDialog() {

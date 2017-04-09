@@ -58,9 +58,17 @@ public class StringUtils {
         return Singleton.DATE_WEEK_FORMAT.format(date);
     }
 
+
+    public static String dateTimeString(long time) {
+        if (time <= 0) throw new IllegalArgumentException();
+        Singleton.DATE.setTime(time);
+        return Singleton.DATE_TIME_FORMAT.format(Singleton.DATE);
+    }
+
     private static class Singleton {
         static SimpleDateFormat DATE_NUMBER_FORMAT = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
         static SimpleDateFormat DATE_WEEK_FORMAT = new SimpleDateFormat("MM月dd日 E", Locale.CHINA);
+        static SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("MM-dd HH:mm", Locale.CHINA);
         static Date DATE = new Date();
     }
 

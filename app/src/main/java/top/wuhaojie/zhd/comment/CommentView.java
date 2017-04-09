@@ -1,6 +1,9 @@
 package top.wuhaojie.zhd.comment;
 
+import java.util.ArrayList;
+
 import top.wuhaojie.zhd.base.interfaces.BaseView;
+import top.wuhaojie.zhd.comment.adapter.CommentListAdapter;
 
 /**
  * Author: wuhaojie
@@ -18,4 +21,9 @@ public interface CommentView extends BaseView {
 
     void dismissWaitDialog();
 
+    void updateList(ArrayList<CommentListAdapter.Item<?>> items);
+
+    void appendList(ArrayList<CommentListAdapter.Item<?>> items);
+
+    void removeList(int lastSize);
 }
