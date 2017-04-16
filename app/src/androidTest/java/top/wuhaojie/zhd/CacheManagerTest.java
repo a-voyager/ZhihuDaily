@@ -34,13 +34,14 @@ public class CacheManagerTest {
     @Test
     public void hasLatestMessages() throws Exception {
         Context context = InstrumentationRegistry.getTargetContext();
-        LatestMessageResponse latestMessages = CacheManager.getLatestMessages(context);
-        System.out.println(latestMessages);
+        boolean b = CacheManager.hasLatestMessages(context);
+        System.out.println(b);
     }
 
     @Test
     public void getLatestMessages() throws Exception {
-
+        Context context = InstrumentationRegistry.getTargetContext();
+        LatestMessageResponse response = CacheManager.getLatestMessages(context);
     }
 
 
