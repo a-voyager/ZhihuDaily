@@ -51,38 +51,45 @@ public class MainFragmentPresenter implements BasePresenter {
             @Override
             public void onError(Throwable e) {
                 Log.e(TAG, "onError: ", e);
+                // show error
+//                mView.showSnackBar("网络错误...");
+                mView.loadCompleted();
             }
 
             @Override
             public void onNext(LatestMessageResponse latestMessageResponse) {
                 Log.d(TAG, "onNext: Message = " + latestMessageResponse);
-                List<LatestMessageResponse.TopStoriesBean> topStories = latestMessageResponse.getTop_stories();
-
-                ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
-                for (LatestMessageResponse.TopStoriesBean story : topStories) {
-                    MainContentListAdapter.Item item = new MainContentListAdapter.Item();
-                    item.imgUrl = story.getImage();
-                    item.title = story.getTitle();
-                    item.id = story.getId();
-                    items.add(item);
-                }
-                mView.setBanner(items);
-
-                List<LatestMessageResponse.StoriesBean> stories = latestMessageResponse.getStories();
-                mStoryIds = new ArrayList<>();
-                items.clear();
-                for (LatestMessageResponse.StoriesBean st : stories) {
-                    MainContentListAdapter.Item item = new MainContentListAdapter.Item();
-                    item.title = st.getTitle();
-                    item.imgUrl = st.getImages().get(0);
-                    item.id = st.getId();
-                    items.add(item);
-
-                    mStoryIds.add(String.valueOf(item.id));
-                }
-                mView.setListContent(items);
+                handleResult(latestMessageResponse);
             }
         });
+    }
+
+    private void handleResult(LatestMessageResponse latestMessageResponse) {
+        List<LatestMessageResponse.TopStoriesBean> topStories = latestMessageResponse.getTop_stories();
+
+        ArrayList<MainContentListAdapter.Item> items = new ArrayList<>();
+        for (LatestMessageResponse.TopStoriesBean story : topStories) {
+            MainContentListAdapter.Item item = new MainContentListAdapter.Item();
+            item.imgUrl = story.getImage();
+            item.title = story.getTitle();
+            item.id = story.getId();
+            items.add(item);
+        }
+        mView.setBanner(items);
+
+        List<LatestMessageResponse.StoriesBean> stories = latestMessageResponse.getStories();
+        mStoryIds = new ArrayList<>();
+        items.clear();
+        for (LatestMessageResponse.StoriesBean st : stories) {
+            MainContentListAdapter.Item item = new MainContentListAdapter.Item();
+            item.title = st.getTitle();
+            item.imgUrl = st.getImages().get(0);
+            item.id = st.getId();
+            items.add(item);
+
+            mStoryIds.add(String.valueOf(item.id));
+        }
+        mView.setListContent(items);
     }
 
     public void onRefresh() {

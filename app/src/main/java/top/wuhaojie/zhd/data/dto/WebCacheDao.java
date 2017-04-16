@@ -45,6 +45,9 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
                 "\"TYPE\" INTEGER NOT NULL ," + // 1: type
                 "\"CONTENT\" TEXT," + // 2: content
                 "\"TIME_STAMP\" INTEGER NOT NULL );"); // 3: timeStamp
+        // Add Indexes
+        db.execSQL("CREATE INDEX " + constraint + "IDX_WEB_CACHE_TIME_STAMP ON WEB_CACHE" +
+                " (\"TIME_STAMP\" ASC);");
     }
 
     /** Drops the underlying database table. */

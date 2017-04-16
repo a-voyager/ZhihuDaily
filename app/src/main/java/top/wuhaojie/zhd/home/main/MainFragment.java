@@ -12,6 +12,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import top.wuhaojie.lib.list.OnLoadMoreListener;
+import top.wuhaojie.lib.utils.SnackBarUtils;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
@@ -91,6 +92,11 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void resetPage() {
         if (mOnLoadMoreListener != null) mOnLoadMoreListener.resetPage();
+    }
+
+    @Override
+    public void showSnackBar(String message) {
+        SnackBarUtils.show(mActivity, message);
     }
 
     @Override

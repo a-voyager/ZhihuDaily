@@ -20,4 +20,6 @@ public interface MainFragmentView extends BaseView {
     void setBanner(List<MainContentListAdapter.Item> items);
 
     void resetPage();
+
+    void showSnackBar(String message);
 }

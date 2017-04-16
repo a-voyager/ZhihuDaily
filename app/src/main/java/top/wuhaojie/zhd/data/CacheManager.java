@@ -24,20 +24,20 @@ public class CacheManager {
 
     public static void saveLatestMessages(Context context, LatestMessageResponse latestMessageResponse) {
         LocalDBManager manager = LocalDBManager.getInstance(context);
-        WebCache cache = new WebCache(0L, Constants.CACHE_TYPE_LATEST_MESSAGES, JsonUtils.toJson(latestMessageResponse), System.currentTimeMillis());
+        WebCache cache = new WebCache(null, Constants.CACHE_TYPE_LATEST_MESSAGES, JsonUtils.toJson(latestMessageResponse), System.currentTimeMillis());
         manager.insert(cache);
     }
 
     public static boolean hasLatestMessages(Context context) {
         LocalDBManager manager = LocalDBManager.getInstance(context);
-        WebCache cache = manager.queryLastOne();
+        WebCache cache = manager.queryLastOne(Constants.CACHE_TYPE_LATEST_MESSAGES);
         return cache != null;
     }
 
     @Nullable
     public static LatestMessageResponse getLatestMessages(Context context) {
         LocalDBManager manager = LocalDBManager.getInstance(context);
-        WebCache cache = manager.queryLastOne();
+        WebCache cache = manager.queryLastOne(Constants.CACHE_TYPE_LATEST_MESSAGES);
         if (cache == null) return null;
         String content = cache.getContent();
         return JsonUtils.fromJson(content, LatestMessageResponse.class);

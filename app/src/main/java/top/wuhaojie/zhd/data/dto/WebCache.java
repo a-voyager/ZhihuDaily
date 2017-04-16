@@ -3,6 +3,7 @@ package top.wuhaojie.zhd.data.dto;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 
 /**
  * Author: wuhaojie
@@ -20,6 +21,7 @@ public class WebCache {
 
     String content;
 
+    @Index
     long timeStamp;
 
     public long getTimeStamp() {

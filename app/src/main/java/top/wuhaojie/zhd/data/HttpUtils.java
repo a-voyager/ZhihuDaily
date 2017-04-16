@@ -4,6 +4,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import top.wuhaojie.lib.http.RetrofitHttpHelper;
+import top.wuhaojie.zhd.App;
 import top.wuhaojie.zhd.data.api.APIService;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
@@ -18,6 +19,7 @@ import top.wuhaojie.zhd.utils.StringUtils;
  */
 
 public class HttpUtils {
+    private static final String TAG = "HttpUtils";
 
     // 坑: 导包
     // 依赖是 'io.reactivex:rxandroid:1.2.1'
@@ -44,6 +46,13 @@ public class HttpUtils {
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(latestMessageResponse -> CacheManager.saveLatestMessages(App.getContext(), latestMessageResponse))
+                .doOnError(throwable -> {
+                    if (CacheManager.hasLatestMessages(App.getContext())) {
+                        LatestMessageResponse response = CacheManager.getLatestMessages(App.getContext());
+                        subscriber.onNext(response);
+                    }
+                })
                 .subscribe(subscriber);
     }
 
