@@ -136,6 +136,16 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
     }
 
 
+    public interface OnHeaderClickListener {
+        void onHeaderClickListener(String clickedStoryId, ArrayList<String> bannerIds);
+    }
+
+    private OnHeaderClickListener mOnHeaderClickListener;
+
+    public void setOnHeaderClickListener(OnHeaderClickListener onHeaderClickListener) {
+        mOnHeaderClickListener = onHeaderClickListener;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(Item item);
     }
@@ -210,6 +220,11 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
             mBanner
                     .setImages(images)
                     .setBannerTitles(titles)
+                    .setOnBannerClickListener(position -> {
+                        if (mOnHeaderClickListener != null) {
+                            mOnHeaderClickListener.onHeaderClickListener(ids.get(position - 1), ids);
+                        }
+                    })
                     .start();
         }
 

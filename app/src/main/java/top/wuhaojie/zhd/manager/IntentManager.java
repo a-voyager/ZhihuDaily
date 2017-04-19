@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import java.util.ArrayList;
+
 import top.wuhaojie.zhd.comment.CommentActivity;
 import top.wuhaojie.zhd.constant.Constants;
+import top.wuhaojie.zhd.detail.DetailActivity;
 
 /**
  * Author: wuhaojie
@@ -26,6 +29,17 @@ public class IntentManager {
         Intent intent = new Intent(context, CommentActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_STORY_ID, id);
         intent.putExtra(Constants.INTENT_EXTRA_COMMENT_NUMBER, commentNumber);
+        return intent;
+    }
+
+
+    public static Intent toDetailActivity(Context context, ArrayList<String> ids, String currId) {
+        if (ids == null || TextUtils.isEmpty(currId)) {
+            throw new IllegalArgumentException("ids can not be null");
+        }
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_STORY_IDS, ids);
+        intent.putExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID, currId);
         return intent;
     }
 

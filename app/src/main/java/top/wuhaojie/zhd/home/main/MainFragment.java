@@ -87,6 +87,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void setBanner(List<MainContentListAdapter.Item> list) {
         mMainContentListAdapter.setBannerList(list);
+        mMainContentListAdapter.setOnHeaderClickListener((clickedStoryId, bannerIds) -> mMainFragmentPresenter.onHeaderClickListener(clickedStoryId, bannerIds));
     }
 
     @Override

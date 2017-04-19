@@ -13,12 +13,11 @@ import java.util.List;
 import rx.Subscriber;
 import top.wuhaojie.zhd.base.interfaces.BasePresenter;
 import top.wuhaojie.zhd.base.interfaces.BaseView;
-import top.wuhaojie.zhd.constant.Constants;
 import top.wuhaojie.zhd.data.HttpUtils;
-import top.wuhaojie.zhd.detail.DetailActivity;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.home.main.adapter.MainContentListAdapter;
+import top.wuhaojie.zhd.manager.IntentManager;
 import top.wuhaojie.zhd.utils.StringUtils;
 
 /**
@@ -103,9 +102,7 @@ public class MainFragmentPresenter implements BasePresenter {
     }
 
     public void onMainContentListItemClick(MainContentListAdapter.Item item) {
-        Intent intent = new Intent(mContext, DetailActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_STORY_IDS, mStoryIds);
-        intent.putExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID, String.valueOf(item.id));
+        Intent intent = IntentManager.toDetailActivity(mContext, mStoryIds, String.valueOf(item.id));
         mContext.startActivity(intent);
     }
 
@@ -137,6 +134,9 @@ public class MainFragmentPresenter implements BasePresenter {
                     item.title = story.getTitle();
                     item.id = story.getId();
                     list.add(item);
+
+                    mStoryIds.add(String.valueOf(item.id));
+
                 }
                 String date = beforeMessageResponse.getDate();
                 try {
@@ -147,5 +147,10 @@ public class MainFragmentPresenter implements BasePresenter {
                 mView.appendListContent(list, date);
             }
         });
+    }
+
+    public void onHeaderClickListener(String clickedStoryId, ArrayList<String> bannerIds) {
+        Intent intent = IntentManager.toDetailActivity(mContext, bannerIds, clickedStoryId);
+        mContext.startActivity(intent);
     }
 }
