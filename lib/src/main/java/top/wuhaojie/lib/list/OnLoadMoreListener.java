@@ -16,7 +16,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
     private static final String TAG = "OnLoadMoreListener";
     private boolean mLoaded = true;
     private int mLastTotalCount = 0;
-    private int mCurrPage = -1;
+    private int mCurrPage = 0;
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -50,7 +50,7 @@ public abstract class OnLoadMoreListener extends RecyclerView.OnScrollListener {
 
 
     public void resetPage() {
-        mCurrPage = -1;
+        mCurrPage = 0;
         mLastTotalCount = 0;
         mLoaded = true;
     }

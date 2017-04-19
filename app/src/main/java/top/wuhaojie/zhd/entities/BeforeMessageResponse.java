@@ -100,5 +100,25 @@ public class BeforeMessageResponse {
         public void setImages(List<String> images) {
             this.images = images;
         }
+
+        @Override
+        public String toString() {
+            return "StoriesBean{" +
+                    "type=" + type +
+                    ", id=" + id +
+                    ", ga_prefix='" + ga_prefix + '\'' +
+                    ", title='" + title + '\'' +
+                    ", multipic=" + multipic +
+                    ", images=" + images +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "BeforeMessageResponse{" +
+                "date='" + date + '\'' +
+                ", stories=" + stories +
+                '}';
     }
 }

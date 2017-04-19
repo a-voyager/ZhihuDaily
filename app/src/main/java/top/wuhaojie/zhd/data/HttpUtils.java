@@ -64,6 +64,13 @@ public class HttpUtils {
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(response -> CacheManager.saveDetailMessage(App.getContext(), response))
+                .doOnError(throwable -> {
+                    if (CacheManager.hasDetailMessage(App.getContext(), id)) {
+                        DetailMessageResponse response = CacheManager.getDetailMessage(App.getContext(), id);
+                        subscriber.onNext(response);
+                    }
+                })
                 .subscribe(subscriber);
     }
 
@@ -79,12 +86,23 @@ public class HttpUtils {
 
 
     public static void getBeforeMessage(int page, Subscriber<BeforeMessageResponse> subscriber) {
+        // ZhiHu API 为获取参数前一天的内容
+        // 如果参数为 20170419
+        // 那么返回的为 20170418 的内容
+        String date = StringUtils.dateString(page - 1);
         mRetrofitHttpHelper
                 .getService()
-                .getBeforeMessage(StringUtils.dateString(page))
+                .getBeforeMessage(date)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(response -> CacheManager.saveBeforeMessage(App.getContext(), response, date))
+                .doOnError(throwable -> {
+                    if (CacheManager.hasBeforeMessage(App.getContext(), date)) {
+                        BeforeMessageResponse response = CacheManager.getBeforeMessage(App.getContext(), date);
+                        subscriber.onNext(response);
+                    }
+                })
                 .subscribe(subscriber);
     }
 

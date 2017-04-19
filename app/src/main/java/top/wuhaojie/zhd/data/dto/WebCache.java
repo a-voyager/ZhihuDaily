@@ -19,6 +19,8 @@ public class WebCache {
 
     int type;
 
+    String extra;
+
     String content;
 
     @Index
@@ -56,10 +58,19 @@ public class WebCache {
         this.id = id;
     }
 
-    @Generated(hash = 711929113)
-    public WebCache(Long id, int type, String content, long timeStamp) {
+    public String getExtra() {
+        return this.extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
+    }
+
+    @Generated(hash = 1777811283)
+    public WebCache(Long id, int type, String extra, String content, long timeStamp) {
         this.id = id;
         this.type = type;
+        this.extra = extra;
         this.content = content;
         this.timeStamp = timeStamp;
     }

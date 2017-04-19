@@ -24,8 +24,9 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Type = new Property(1, int.class, "type", false, "TYPE");
-        public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
-        public final static Property TimeStamp = new Property(3, long.class, "timeStamp", false, "TIME_STAMP");
+        public final static Property Extra = new Property(2, String.class, "extra", false, "EXTRA");
+        public final static Property Content = new Property(3, String.class, "content", false, "CONTENT");
+        public final static Property TimeStamp = new Property(4, long.class, "timeStamp", false, "TIME_STAMP");
     };
 
 
@@ -43,8 +44,9 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"WEB_CACHE\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"TYPE\" INTEGER NOT NULL ," + // 1: type
-                "\"CONTENT\" TEXT," + // 2: content
-                "\"TIME_STAMP\" INTEGER NOT NULL );"); // 3: timeStamp
+                "\"EXTRA\" TEXT," + // 2: extra
+                "\"CONTENT\" TEXT," + // 3: content
+                "\"TIME_STAMP\" INTEGER NOT NULL );"); // 4: timeStamp
         // Add Indexes
         db.execSQL("CREATE INDEX " + constraint + "IDX_WEB_CACHE_TIME_STAMP ON WEB_CACHE" +
                 " (\"TIME_STAMP\" ASC);");
@@ -66,11 +68,16 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
         }
         stmt.bindLong(2, entity.getType());
  
+        String extra = entity.getExtra();
+        if (extra != null) {
+            stmt.bindString(3, extra);
+        }
+ 
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(3, content);
+            stmt.bindString(4, content);
         }
-        stmt.bindLong(4, entity.getTimeStamp());
+        stmt.bindLong(5, entity.getTimeStamp());
     }
 
     @Override
@@ -83,11 +90,16 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
         }
         stmt.bindLong(2, entity.getType());
  
+        String extra = entity.getExtra();
+        if (extra != null) {
+            stmt.bindString(3, extra);
+        }
+ 
         String content = entity.getContent();
         if (content != null) {
-            stmt.bindString(3, content);
+            stmt.bindString(4, content);
         }
-        stmt.bindLong(4, entity.getTimeStamp());
+        stmt.bindLong(5, entity.getTimeStamp());
     }
 
     @Override
@@ -100,8 +112,9 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
         WebCache entity = new WebCache( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getInt(offset + 1), // type
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // content
-            cursor.getLong(offset + 3) // timeStamp
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // extra
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // content
+            cursor.getLong(offset + 4) // timeStamp
         );
         return entity;
     }
@@ -110,8 +123,9 @@ public class WebCacheDao extends AbstractDao<WebCache, Long> {
     public void readEntity(Cursor cursor, WebCache entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setType(cursor.getInt(offset + 1));
-        entity.setContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setTimeStamp(cursor.getLong(offset + 3));
+        entity.setExtra(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setContent(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTimeStamp(cursor.getLong(offset + 4));
      }
     
     @Override

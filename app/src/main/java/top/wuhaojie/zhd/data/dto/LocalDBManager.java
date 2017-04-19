@@ -49,7 +49,21 @@ public class LocalDBManager {
         DaoSession session = mReadableDaoMaster.newSession();
         QueryBuilder<WebCache> queryBuilder = session.getWebCacheDao().queryBuilder();
         List<WebCache> result = queryBuilder
-                .where(WebCacheDao.Properties.Id.eq(cacheType))
+                .where(WebCacheDao.Properties.Type.eq(cacheType))
+                .orderDesc(WebCacheDao.Properties.TimeStamp)
+                .limit(1)
+                .list();
+        if (result == null || result.size() == 0) return null;
+        return result.get(0);
+    }
+
+    @Nullable
+    public WebCache queryLastOne(int cacheType, String extra) {
+        DaoSession session = mReadableDaoMaster.newSession();
+        QueryBuilder<WebCache> queryBuilder = session.getWebCacheDao().queryBuilder();
+        List<WebCache> result = queryBuilder
+                .where(WebCacheDao.Properties.Type.eq(cacheType))
+                .where(WebCacheDao.Properties.Extra.eq(extra))
                 .orderDesc(WebCacheDao.Properties.TimeStamp)
                 .limit(1)
                 .list();
