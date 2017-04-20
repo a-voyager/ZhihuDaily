@@ -89,6 +89,8 @@ public class MainFragmentPresenter implements BasePresenter {
             mStoryIds.add(String.valueOf(item.id));
         }
         mView.setListContent(items);
+        topStories = null;
+        items = null;
     }
 
     public void onRefresh() {
@@ -145,6 +147,8 @@ public class MainFragmentPresenter implements BasePresenter {
                     Log.e(TAG, "onNext: ", e);
                 }
                 mView.appendListContent(list, date);
+                list = null;
+                stories = null;
             }
         });
     }

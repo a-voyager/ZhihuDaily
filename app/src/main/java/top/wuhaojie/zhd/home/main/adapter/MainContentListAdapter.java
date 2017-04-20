@@ -67,6 +67,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         mStoryList.add(new Item());
         mStoryList.addAll(storyList);
         notifyDataSetChanged();
+        storyList.clear();
     }
 
 
@@ -74,6 +75,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         mBannerList.clear();
         mBannerList.addAll(bannerList);
         notifyDataSetChanged();
+        bannerList.clear();
     }
 
     public void append(List<Item> list, String indexTitle) {
@@ -85,6 +87,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         mStoryList.add(new Item());
         mStoryList.addAll(list);
         notifyDataSetChanged();
+        list.clear();
     }
 
     @Override
@@ -179,7 +182,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
 
     }
 
-    class FooterViewHolder extends RecyclerView.ViewHolder {
+    private class FooterViewHolder extends RecyclerView.ViewHolder {
 
         FooterViewHolder(View itemView) {
             super(itemView);
@@ -193,7 +196,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         @BindView(R.id.banner_hot)
         Banner mBanner;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mBanner
@@ -236,7 +239,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
         @BindView(R.id.tv_index)
         TextView mTvIndex;
 
-        public IndexViewHolder(View itemView) {
+        IndexViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

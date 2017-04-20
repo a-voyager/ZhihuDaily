@@ -27,4 +27,9 @@ public class App extends Application {
         return sContext;
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ImageLoader.shutdown();
+    }
 }

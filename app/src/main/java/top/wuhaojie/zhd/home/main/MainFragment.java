@@ -69,13 +69,11 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void onStart() {
         super.onStart();
-//        mBannerHot.startAutoPlay();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-//        mBannerHot.stopAutoPlay();
     }
 
 
@@ -116,4 +114,12 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mRvContentMain = null;
+        mMainContentListAdapter = null;
+        mOnLoadMoreListener = null;
+        mMainFragmentPresenter = null;
+    }
 }

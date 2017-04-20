@@ -10,4 +10,6 @@ public interface DetailView extends BaseView {
     void back();
 
     String currStoryId();
+
+    void dispose();
 }

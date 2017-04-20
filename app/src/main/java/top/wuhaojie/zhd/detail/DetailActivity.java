@@ -94,6 +94,13 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
     }
 
     @Override
+    public void dispose() {
+        mVpDetailContent = null;
+        mDetailContentAdapter = null;
+        mDetailPresenter = null;
+    }
+
+    @Override
     public void refreshToolBar(String commentNumber, String praiseNumber) {
         mDetailPresenter.refreshToolBar(commentNumber, praiseNumber);
         if (mCommentNumber == null || mPraiseNumber == null) return;
@@ -101,5 +108,11 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
             throw new NullPointerException("commentNumber is null or praiseNumber is null");
         mCommentNumber.setText(commentNumber);
         mPraiseNumber.setText(praiseNumber);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDetailPresenter.onDestroy();
     }
 }

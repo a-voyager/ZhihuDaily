@@ -228,4 +228,12 @@ public class DetailContentFragment extends BaseViewPagerFragment {
     }
 
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mWebContent.destroy();
+        mIvBigImg = null;
+        mListener = null;
+        mActivity = null;
+    }
 }

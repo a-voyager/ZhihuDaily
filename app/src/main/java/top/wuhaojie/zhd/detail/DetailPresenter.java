@@ -52,4 +52,8 @@ public class DetailPresenter implements BasePresenter {
         mCommentNumber = commentNumber;
         mPraiseNumber = praiseNumber;
     }
+
+    public void onDestroy() {
+        mView.dispose();
+    }
 }
