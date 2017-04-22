@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import top.wuhaojie.zhd.comment.CommentActivity;
 import top.wuhaojie.zhd.constant.Constants;
 import top.wuhaojie.zhd.detail.DetailActivity;
+import top.wuhaojie.zhd.home.HomeActivity;
 
 /**
  * Author: wuhaojie
@@ -40,6 +41,12 @@ public class IntentManager {
         Intent intent = new Intent(context, DetailActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_STORY_IDS, ids);
         intent.putExtra(Constants.INTENT_EXTRA_STORY_CURRENT_ID, currId);
+        return intent;
+    }
+
+
+    public static Intent toMainActivity(Context context) {
+        Intent intent = new Intent(context, HomeActivity.class);
         return intent;
     }
 

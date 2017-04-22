@@ -46,11 +46,11 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
     private final List<Item> mBannerList = new ArrayList<>();
     private final SparseArray<String> mIndexMap = new SparseArray<>();
 
-    {
-        mIndexMap.put(1, "今日热文");
-        mStoryList.add(new Item());
-        mStoryList.add(new Item());
-    }
+//    {
+//        mIndexMap.put(1, "今日热文");
+//        mStoryList.add(new Item());
+//        mStoryList.add(new Item());
+//    }
 
     private Context mContext;
 
