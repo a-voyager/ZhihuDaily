@@ -11,6 +11,7 @@ import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.entities.LongCommentResponse;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
+import top.wuhaojie.zhd.entities.StartImageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 import top.wuhaojie.zhd.utils.StringUtils;
 
@@ -34,8 +35,14 @@ public class HttpUtils {
     private HttpUtils() {
     }
 
-    public static void getStartImage() {
-        mRetrofitHttpHelper.getService().getStartImage();
+    public static void getStartImage(int width, int height, Subscriber<StartImageResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getStartImage(width, height)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
 

@@ -1,6 +1,5 @@
 package top.wuhaojie.zhd.data.api;
 
-import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -9,6 +8,7 @@ import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
 import top.wuhaojie.zhd.entities.LongCommentResponse;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
+import top.wuhaojie.zhd.entities.StartImageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 
 /**
@@ -16,27 +16,27 @@ import top.wuhaojie.zhd.entities.StoryExtraResponse;
  */
 
 public interface APIService {
-    String BASE_URL = "http://news-at.zhihu.com/api/4/";
+    String BASE_URL = "http://news-at.zhihu.com/api/";
 
-    @GET("")
-    Observable<ResponseBody> getStartImage();
+    @GET("7/prefetch-launch-images/{width}*{height}")
+    Observable<StartImageResponse> getStartImage(@Path("width") int width, @Path("height") int height);
 
-    @GET("news/latest")
+    @GET("4/news/latest")
     Observable<LatestMessageResponse> getLatestMessages();
 
-    @GET("news/{id}")
+    @GET("4/news/{id}")
     Observable<DetailMessageResponse> getDetailMessage(@Path("id") String id);
 
-    @GET("story-extra/{id}")
+    @GET("4/story-extra/{id}")
     Observable<StoryExtraResponse> getStoryExtra(@Path("id") String id);
 
-    @GET("news/before/{date}")
+    @GET("4/news/before/{date}")
     Observable<BeforeMessageResponse> getBeforeMessage(@Path("date") String date);
 
-    @GET("story/{id}/long-comments")
+    @GET("4/story/{id}/long-comments")
     Observable<LongCommentResponse> getLongComment(@Path("id") String id);
 
-    @GET("story/{id}/short-comments")
+    @GET("4/story/{id}/short-comments")
     Observable<ShortCommentResponse> getShortComment(@Path("id") String id);
 
 }

@@ -19,4 +19,5 @@ public interface Constants {
     int CACHE_TYPE_LATEST_MESSAGES = 1;
     int CACHE_TYPE_DETAIL_MESSAGE = 2;
     int CACHE_TYPE_BEFORE_MESSAGE = 3;
+    int CACHE_TYPE_SPLASH_TAG = 4;
 }

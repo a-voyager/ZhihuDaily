@@ -88,5 +88,22 @@ public class CacheManager {
         return JsonUtils.fromJson(content, BeforeMessageResponse.class);
     }
 
+    public static void saveSplashTag(Context context, String tag) {
+        WebCache cache = new WebCache(null, Constants.CACHE_TYPE_SPLASH_TAG, tag, null, System.currentTimeMillis());
+        LocalDBManager.getInstance(context).insert(cache);
+    }
+
+    public static boolean hasSplashTag(Context context, String tag) {
+        WebCache cache = LocalDBManager.getInstance(context).queryLastOne(Constants.CACHE_TYPE_SPLASH_TAG, tag);
+        return cache != null;
+    }
+
+    @Nullable
+    public static String getSplashTag(Context context) {
+        WebCache cache = LocalDBManager.getInstance(context).queryLastOne(Constants.CACHE_TYPE_SPLASH_TAG);
+        if (cache == null) return null;
+        return cache.getExtra();
+    }
+
 
 }

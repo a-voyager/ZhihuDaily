@@ -16,7 +16,7 @@ import top.wuhaojie.zhd.utils.StringUtils;
 public class StringUtilsTest {
     @Test
     public void dateTimeString() throws Exception {
-        String s = StringUtils.dateTimeString(1491706621);
+        String s = StringUtils.dateTimeString(System.currentTimeMillis());
         System.out.println(s);
     }
 

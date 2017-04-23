@@ -1,5 +1,7 @@
 package top.wuhaojie.zhd.splash;
 
+import android.graphics.Point;
+
 import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 /**
@@ -12,4 +14,8 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 public interface SplashView extends BaseView {
 
     void finishActivity();
+
+    void getScreenSize(Point point);
+
+    void loadImage(String uri);
 }
