@@ -14,11 +14,17 @@ public class RetrofitHttpHelper<T> {
     private T mApiService;
 
     public RetrofitHttpHelper(final String baseUrl, final Class<T> service) {
-        Retrofit.Builder builder = new Retrofit.Builder();
-        Retrofit retrofit = builder.baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
+        this(baseUrl, service, true);
+    }
+
+
+    public RetrofitHttpHelper(final String baseUrl, final Class<T> service, boolean toJson) {
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
+        if (toJson)
+            builder.addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
         mApiService = retrofit.create(service);
     }
 

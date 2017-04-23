@@ -5,6 +5,8 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.File;
+
 import rx.Subscriber;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
@@ -17,6 +19,11 @@ import top.wuhaojie.zhd.entities.ShortCommentResponse;
  */
 @RunWith(AndroidJUnit4.class)
 public class HttpUtilsTest {
+    @Test
+    public void downloadFile() throws Exception {
+        HttpUtils.downloadFile("https://pic4.zhimg.com/v2-d0837fd8e39d98b2d58d1911e4fbd913.jpg", new File(""));
+        while (true);
+    }
 
     @Test
     public void getStartImage() throws Exception {
@@ -66,7 +73,7 @@ public class HttpUtilsTest {
                 System.out.println(shortCommentResponse);
             }
         });
-        while (true);
+        while (true) ;
     }
 
 }

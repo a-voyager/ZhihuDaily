@@ -1,11 +1,19 @@
 package top.wuhaojie.zhd.data;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.io.File;
+
+import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import top.wuhaojie.lib.http.RetrofitHttpHelper;
 import top.wuhaojie.zhd.App;
 import top.wuhaojie.zhd.data.api.APIService;
+import top.wuhaojie.zhd.data.api.ExtraService;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
@@ -31,6 +39,7 @@ public class HttpUtils {
 
 
     private static RetrofitHttpHelper<APIService> mRetrofitHttpHelper = new RetrofitHttpHelper<>(APIService.BASE_URL, APIService.class);
+    private static RetrofitHttpHelper<ExtraService> mExtraHttpHelper = new RetrofitHttpHelper<>(APIService.BASE_URL, ExtraService.class, false);
 
     private HttpUtils() {
     }
@@ -133,6 +142,22 @@ public class HttpUtils {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
+    }
+
+
+    public static void downloadFile(@NonNull String url, @NonNull File des) {
+        mExtraHttpHelper
+                .getService()
+                .downloadFile(url)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .doOnNext(new Action1<ResponseBody>() {
+                    @Override
+                    public void call(ResponseBody responseBody) {
+                        Log.d(TAG, "call: ");
+                    }
+                })
+                .subscribe();
     }
 
 }
