@@ -5,8 +5,11 @@ import android.text.TextUtils;
 
 import java.io.File;
 
+import okhttp3.ResponseBody;
+import rx.Subscriber;
 import top.wuhaojie.zhd.App;
 import top.wuhaojie.zhd.data.CacheManager;
+import top.wuhaojie.zhd.data.HttpUtils;
 
 /**
  * Author: wuhaojie
@@ -30,10 +33,24 @@ public class SplashManager {
         if (CacheManager.hasSplashTag(App.getContext(), tag)) return;
         // load url & save with tag as fileName
         File des = getFile(tag);
+        if (des == null) return;
+        HttpUtils.downloadFile(url, des, new Subscriber<ResponseBody>() {
+            @Override
+            public void onCompleted() {
 
-        // TODO: 17-4-23 download from url to des file
+            }
 
-        CacheManager.saveSplashTag(App.getContext(), tag);
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ResponseBody responseBody) {
+                CacheManager.saveSplashTag(App.getContext(), tag);
+            }
+        });
+
     }
 
 

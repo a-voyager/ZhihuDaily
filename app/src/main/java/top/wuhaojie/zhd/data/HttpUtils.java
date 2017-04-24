@@ -4,11 +4,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import top.wuhaojie.lib.http.RetrofitHttpHelper;
 import top.wuhaojie.zhd.App;
@@ -145,19 +147,34 @@ public class HttpUtils {
     }
 
 
-    public static void downloadFile(@NonNull String url, @NonNull File des) {
+    public static void downloadFile(@NonNull String url, @NonNull File des, Subscriber<ResponseBody> subscriber) {
         mExtraHttpHelper
                 .getService()
                 .downloadFile(url)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .doOnNext(new Action1<ResponseBody>() {
-                    @Override
-                    public void call(ResponseBody responseBody) {
-                        Log.d(TAG, "call: ");
+                .observeOn(Schedulers.io())
+                .doOnNext(responseBody -> {
+                    try {
+                        InputStream inputStream = responseBody.byteStream();
+                        OutputStream outputStream = new FileOutputStream(des);
+
+                        byte[] buffer = new byte[1024];
+                        int len = 0;
+                        while ((len = inputStream.read(buffer)) > 0) {
+                            outputStream.write(buffer, 0, len);
+                        }
+
+                        inputStream.close();
+                        outputStream.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                    Log.d(TAG, "call: ");
                 })
-                .subscribe();
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
 }
