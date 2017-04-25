@@ -10,6 +10,7 @@ import top.wuhaojie.zhd.entities.LongCommentResponse;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.StartImageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
+import top.wuhaojie.zhd.entities.ThemesListResponse;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -38,5 +39,8 @@ public interface APIService {
 
     @GET("4/story/{id}/short-comments")
     Observable<ShortCommentResponse> getShortComment(@Path("id") String id);
+
+    @GET("4/themes")
+    Observable<ThemesListResponse> getThemesList();
 
 }

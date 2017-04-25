@@ -23,6 +23,7 @@ import top.wuhaojie.zhd.entities.LongCommentResponse;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.StartImageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
+import top.wuhaojie.zhd.entities.ThemesListResponse;
 import top.wuhaojie.zhd.utils.StringUtils;
 
 /**
@@ -174,6 +175,24 @@ public class HttpUtils {
                     Log.d(TAG, "call: ");
                 })
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
+    public static void getThemesList(Subscriber<ThemesListResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getThemesList()
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(response -> CacheManager.saveThemesList(App.getContext(), response))
+                .doOnError(throwable -> {
+                    if (CacheManager.hasThemesList(App.getContext())) {
+                        ThemesListResponse response = CacheManager.getThemesList(App.getContext());
+                        subscriber.onNext(response);
+                    }
+                })
                 .subscribe(subscriber);
     }
 

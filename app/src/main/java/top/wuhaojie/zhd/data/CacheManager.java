@@ -9,6 +9,7 @@ import top.wuhaojie.zhd.data.dto.WebCache;
 import top.wuhaojie.zhd.entities.BeforeMessageResponse;
 import top.wuhaojie.zhd.entities.DetailMessageResponse;
 import top.wuhaojie.zhd.entities.LatestMessageResponse;
+import top.wuhaojie.zhd.entities.ThemesListResponse;
 import top.wuhaojie.zhd.utils.JsonUtils;
 
 /**
@@ -105,5 +106,23 @@ public class CacheManager {
         return cache.getExtra();
     }
 
+
+    public static void saveThemesList(Context context, ThemesListResponse response) {
+        WebCache cache = new WebCache(null, Constants.CACHE_TYPE_THEME_LIST, null, JsonUtils.toJson(response), System.currentTimeMillis());
+        LocalDBManager.getInstance(context).insert(cache);
+    }
+
+    public static boolean hasThemesList(Context context) {
+        WebCache cache = LocalDBManager.getInstance(context).queryLastOne(Constants.CACHE_TYPE_THEME_LIST);
+        return cache != null;
+    }
+
+    @Nullable
+    public static ThemesListResponse getThemesList(Context context) {
+        LocalDBManager manager = LocalDBManager.getInstance(context);
+        WebCache cache = manager.queryLastOne(Constants.CACHE_TYPE_THEME_LIST);
+        if (cache == null) return null;
+        return JsonUtils.fromJson(cache.getContent(), ThemesListResponse.class);
+    }
 
 }

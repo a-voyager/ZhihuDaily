@@ -58,7 +58,15 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
         String thumbnail;
         String description;
         int id;
-        String name = "HHH";
+        String name;
+
+        public Others(int color, String thumbnail, String description, int id, String name) {
+            this.color = color;
+            this.thumbnail = thumbnail;
+            this.description = description;
+            this.id = id;
+            this.name = name;
+        }
     }
 
 

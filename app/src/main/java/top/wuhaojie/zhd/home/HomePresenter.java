@@ -47,9 +47,9 @@ public class HomePresenter implements BasePresenter {
         Item<Home> item = new Item<>(TYPE_HOME, null);
         list.add(item);
 
-        list.add(new Item<>(TYPE_OTHERS, new Others()));
-        list.add(new Item<>(TYPE_OTHERS, new Others()));
-        list.add(new Item<>(TYPE_OTHERS, new Others()));
+//        list.add(new Item<>(TYPE_OTHERS, new Others()));
+//        list.add(new Item<>(TYPE_OTHERS, new Others()));
+//        list.add(new Item<>(TYPE_OTHERS, new Others()));
 
         mView.setNavAdapterList(list);
 

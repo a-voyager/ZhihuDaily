@@ -5,11 +5,10 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-
 import rx.Subscriber;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
+import top.wuhaojie.zhd.entities.ThemesListResponse;
 
 /**
  * Author: wuhaojie
@@ -20,9 +19,30 @@ import top.wuhaojie.zhd.entities.ShortCommentResponse;
 @RunWith(AndroidJUnit4.class)
 public class HttpUtilsTest {
     @Test
+    public void getThemesList() throws Exception {
+        HttpUtils.getThemesList(new Subscriber<ThemesListResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ThemesListResponse themesListResponse) {
+                System.out.println(themesListResponse);
+            }
+        });
+        while (true) ;
+    }
+
+    @Test
     public void downloadFile() throws Exception {
-        HttpUtils.downloadFile("https://pic4.zhimg.com/v2-d0837fd8e39d98b2d58d1911e4fbd913.jpg", new File(""));
-        while (true);
+//        HttpUtils.downloadFile("https://pic4.zhimg.com/v2-d0837fd8e39d98b2d58d1911e4fbd913.jpg", new File(""));
+        while (true) ;
     }
 
     @Test
