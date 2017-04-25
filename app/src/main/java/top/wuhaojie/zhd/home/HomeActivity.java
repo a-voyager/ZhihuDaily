@@ -1,23 +1,25 @@
 package top.wuhaojie.zhd.home;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseActivity;
 import top.wuhaojie.zhd.home.main.MainFragment;
 
-public class HomeActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity implements HomeView {
 
     HomePresenter mHomePresenter;
 
@@ -25,6 +27,9 @@ public class HomeActivity extends BaseActivity
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawer;
+    @BindView(R.id.rv_nav)
+    RecyclerView mRvNav;
+    private HomeNavigationAdapter mHomeNavigationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +43,10 @@ public class HomeActivity extends BaseActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        mNavigationView.setNavigationItemSelectedListener(this);
+
+        mHomeNavigationAdapter = new HomeNavigationAdapter(this);
+        mRvNav.setLayoutManager(new LinearLayoutManager(this));
+        mRvNav.setAdapter(mHomeNavigationAdapter);
 
         MainFragment mainFragment = MainFragment.newInstance();
         getSupportFragmentManager()
@@ -46,6 +54,8 @@ public class HomeActivity extends BaseActivity
                 .add(R.id.fragment, mainFragment)
                 .commit();
         mCurrFragment = mainFragment;
+
+        mHomePresenter.onCreate(savedInstanceState);
 
     }
 
@@ -70,20 +80,6 @@ public class HomeActivity extends BaseActivity
         return mHomePresenter.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.nav_home:
-                switchFragment(getSupportFragmentManager(), MainFragment.newInstance());
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     private Fragment mCurrFragment;
 
@@ -108,5 +104,10 @@ public class HomeActivity extends BaseActivity
     @Override
     public int getLayoutResID() {
         return R.layout.activity_home;
+    }
+
+    @Override
+    public void setNavAdapterList(ArrayList<HomeNavigationAdapter.Item> list) {
+        mHomeNavigationAdapter.setList(list);
     }
 }
