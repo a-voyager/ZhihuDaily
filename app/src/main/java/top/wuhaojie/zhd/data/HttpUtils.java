@@ -24,6 +24,7 @@ import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.StartImageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 import top.wuhaojie.zhd.entities.ThemesListResponse;
+import top.wuhaojie.zhd.entities.ThemesResponse;
 import top.wuhaojie.zhd.utils.StringUtils;
 
 /**
@@ -193,6 +194,17 @@ public class HttpUtils {
                         subscriber.onNext(response);
                     }
                 })
+                .subscribe(subscriber);
+    }
+
+
+    public static void getThemes(String id, Subscriber<ThemesResponse> subscriber) {
+        mRetrofitHttpHelper
+                .getService()
+                .getThemes(id)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }
 

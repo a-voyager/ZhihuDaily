@@ -125,4 +125,6 @@ public class CacheManager {
         return JsonUtils.fromJson(cache.getContent(), ThemesListResponse.class);
     }
 
+    // TODO: 17-4-25 themes cache
+
 }

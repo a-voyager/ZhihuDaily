@@ -11,6 +11,7 @@ import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.StartImageResponse;
 import top.wuhaojie.zhd.entities.StoryExtraResponse;
 import top.wuhaojie.zhd.entities.ThemesListResponse;
+import top.wuhaojie.zhd.entities.ThemesResponse;
 
 /**
  * Created by wuhaojie on 17-2-9.
@@ -42,5 +43,9 @@ public interface APIService {
 
     @GET("4/themes")
     Observable<ThemesListResponse> getThemesList();
+
+    @GET("4/theme/{id}")
+    Observable<ThemesResponse> getThemes(@Path("id") String id);
+
 
 }

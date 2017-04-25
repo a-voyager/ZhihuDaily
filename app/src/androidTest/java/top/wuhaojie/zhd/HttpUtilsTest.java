@@ -9,6 +9,7 @@ import rx.Subscriber;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.ShortCommentResponse;
 import top.wuhaojie.zhd.entities.ThemesListResponse;
+import top.wuhaojie.zhd.entities.ThemesResponse;
 
 /**
  * Author: wuhaojie
@@ -18,6 +19,27 @@ import top.wuhaojie.zhd.entities.ThemesListResponse;
  */
 @RunWith(AndroidJUnit4.class)
 public class HttpUtilsTest {
+    @Test
+    public void getThemes() throws Exception {
+        HttpUtils.getThemes("5", new Subscriber<ThemesResponse>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(ThemesResponse themesResponse) {
+                System.out.println(themesResponse);
+            }
+        });
+        while (true) ;
+    }
+
     @Test
     public void getThemesList() throws Exception {
         HttpUtils.getThemesList(new Subscriber<ThemesListResponse>() {
