@@ -67,6 +67,17 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
             this.id = id;
             this.name = name;
         }
+
+        @Override
+        public String toString() {
+            return "Others{" +
+                    "color=" + color +
+                    ", thumbnail='" + thumbnail + '\'' +
+                    ", description='" + description + '\'' +
+                    ", id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
 
 
@@ -128,9 +139,18 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
 
     public interface OnNavItemClickListener {
         void onHomeItemClick();
+
+        void onOthersThemeFollowClick(Others o);
+
+        void onOthersThemeClick(Others o);
+
     }
 
     private OnNavItemClickListener mListener;
+
+    public void setListener(OnNavItemClickListener listener) {
+        mListener = listener;
+    }
 
     private class HomeHolder extends RecyclerView.ViewHolder {
 
@@ -155,14 +175,22 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
         TextView mTvTitle;
         @BindView(R.id.btn_nav_follow)
         Button mBtnNavFollow;
+        View mView;
 
         OthersHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            mView = itemView;
         }
 
         public void setView(Others o) {
             mTvTitle.setText(o.name);
+            mBtnNavFollow.setOnClickListener(v -> {
+                if (mListener != null) mListener.onOthersThemeFollowClick(o);
+            });
+            mView.setOnClickListener(v -> {
+                if (mListener != null) mListener.onOthersThemeClick(o);
+            });
         }
 
     }

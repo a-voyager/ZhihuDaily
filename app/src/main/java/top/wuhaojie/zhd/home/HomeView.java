@@ -13,4 +13,6 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 
 public interface HomeView extends BaseView {
     void setNavAdapterList(ArrayList<HomeNavigationAdapter.Item> list);
+
+    void switch2Main();
 }

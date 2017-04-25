@@ -3,6 +3,7 @@ package top.wuhaojie.zhd.home;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ import static top.wuhaojie.zhd.home.HomeNavigationAdapter.*;
  * Created by wuhaojie on 17-2-9.
  */
 
-public class HomePresenter implements BasePresenter {
+public class HomePresenter implements BasePresenter, OnNavItemClickListener {
 
+    private static final String TAG = "HomePresenter";
     private Context mContext;
     private HomeView mView;
 
@@ -82,5 +84,20 @@ public class HomePresenter implements BasePresenter {
 
         mView.setNavAdapterList(list);
 
+    }
+
+    @Override
+    public void onHomeItemClick() {
+        mView.switch2Main();
+    }
+
+    @Override
+    public void onOthersThemeFollowClick(Others o) {
+        Log.d(TAG, "onOthersThemeFollowClick: " + o);
+    }
+
+    @Override
+    public void onOthersThemeClick(Others o) {
+        Log.d(TAG, "onOthersThemeClick: " + o);
     }
 }

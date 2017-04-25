@@ -45,6 +45,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
 
         mHomeNavigationAdapter = new HomeNavigationAdapter(this);
+        mHomeNavigationAdapter.setListener(mHomePresenter);
+
         mRvNav.setLayoutManager(new LinearLayoutManager(this));
         mRvNav.setAdapter(mHomeNavigationAdapter);
 
@@ -109,5 +111,10 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void setNavAdapterList(ArrayList<HomeNavigationAdapter.Item> list) {
         mHomeNavigationAdapter.setList(list);
+    }
+
+    @Override
+    public void switch2Main() {
+        switchFragment(getSupportFragmentManager(), MainFragment.newInstance());
     }
 }
