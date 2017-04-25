@@ -18,6 +18,7 @@ import butterknife.BindView;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseActivity;
 import top.wuhaojie.zhd.home.main.MainFragment;
+import top.wuhaojie.zhd.home.theme.ThemeFragment;
 
 public class HomeActivity extends BaseActivity implements HomeView {
 
@@ -116,5 +117,16 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void switch2Main() {
         switchFragment(getSupportFragmentManager(), MainFragment.newInstance());
+    }
+
+    @Override
+    public void switch2Theme(HomeNavigationAdapter.Others o) {
+        ThemeFragment.Argument argument = new ThemeFragment.Argument(o.color, o.thumbnail, o.description, o.id, o.name);
+        switchFragment(getSupportFragmentManager(), ThemeFragment.newInstance(argument));
+    }
+
+    @Override
+    public void closeDrawer() {
+        mDrawer.closeDrawer(GravityCompat.START);
     }
 }

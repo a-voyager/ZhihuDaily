@@ -15,4 +15,8 @@ public interface HomeView extends BaseView {
     void setNavAdapterList(ArrayList<HomeNavigationAdapter.Item> list);
 
     void switch2Main();
+
+    void switch2Theme(HomeNavigationAdapter.Others o);
+
+    void closeDrawer();
 }

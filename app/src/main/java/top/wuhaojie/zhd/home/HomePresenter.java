@@ -89,6 +89,7 @@ public class HomePresenter implements BasePresenter, OnNavItemClickListener {
     @Override
     public void onHomeItemClick() {
         mView.switch2Main();
+        mView.closeDrawer();
     }
 
     @Override
@@ -99,5 +100,7 @@ public class HomePresenter implements BasePresenter, OnNavItemClickListener {
     @Override
     public void onOthersThemeClick(Others o) {
         Log.d(TAG, "onOthersThemeClick: " + o);
+        mView.switch2Theme(o);
+        mView.closeDrawer();
     }
 }
