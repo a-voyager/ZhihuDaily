@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -85,11 +86,22 @@ public class EditorsActivity extends BaseActivity implements EditorsView {
         mPresenter = new EditorsPresenter(this);
         mPresenter.bindView(this);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         mEditorsAdapter = new EditorsAdapter(this, EditorsAdapter.MODE_VERTICAL);
         mRvEditors.setLayoutManager(new LinearLayoutManager(this));
         mRvEditors.setAdapter(mEditorsAdapter);
 
         mPresenter.onCreate(savedInstanceState, getIntent());
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) finish();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
