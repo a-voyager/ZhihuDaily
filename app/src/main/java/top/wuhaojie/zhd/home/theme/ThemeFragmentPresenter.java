@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rx.Subscriber;
 import top.wuhaojie.zhd.base.interfaces.BasePresenter;
@@ -58,17 +59,16 @@ public class ThemeFragmentPresenter implements BasePresenter {
             }
         });
 
-        mList = new ArrayList<>();
-        mList.add(new EditorsAdapter.Item("", "", 0, "http://pic4.zhimg.com/40f7ca4a683566acbe16a30a4992a943_m.jpg", ""));
-        mList.add(new EditorsAdapter.Item("", "", 0, "http://pic4.zhimg.com/40f7ca4a683566acbe16a30a4992a943_m.jpg", ""));
-        mList.add(new EditorsAdapter.Item("", "", 0, "http://pic4.zhimg.com/40f7ca4a683566acbe16a30a4992a943_m.jpg", ""));
-
-        mView.setEditorsList(mList);
-
     }
 
     private void handleResult(ThemesResponse themesResponse) {
-
+        List<ThemesResponse.EditorsBean> editors = themesResponse.getEditors();
+        mList = new ArrayList<>();
+        for (ThemesResponse.EditorsBean editor : editors) {
+            EditorsAdapter.Item item = new EditorsAdapter.Item(editor.getUrl(), editor.getBio(), editor.getId(), editor.getAvatar(), editor.getName());
+            mList.add(item);
+        }
+        mView.setEditorsList(mList);
     }
 
     public void onEditorsClick() {
