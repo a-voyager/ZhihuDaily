@@ -117,6 +117,9 @@ public class HomeActivity extends BaseActivity implements HomeView {
     @Override
     public void switch2Main() {
         switchFragment(getSupportFragmentManager(), MainFragment.newInstance());
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.app_name));
+        }
     }
 
     @Override

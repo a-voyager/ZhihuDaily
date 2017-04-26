@@ -10,6 +10,7 @@ import top.wuhaojie.zhd.comment.CommentActivity;
 import top.wuhaojie.zhd.constant.Constants;
 import top.wuhaojie.zhd.detail.DetailActivity;
 import top.wuhaojie.zhd.home.HomeActivity;
+import top.wuhaojie.zhd.home.theme.editors.EditorsActivity;
 
 /**
  * Author: wuhaojie
@@ -46,7 +47,13 @@ public class IntentManager {
 
 
     public static Intent toMainActivity(Context context) {
-        Intent intent = new Intent(context, HomeActivity.class);
+        return new Intent(context, HomeActivity.class);
+    }
+
+
+    public static Intent toEditorsActivity(Context context, ArrayList<EditorsActivity.Argument> list) {
+        Intent intent = new Intent(context, EditorsActivity.class);
+        intent.putParcelableArrayListExtra(Constants.INTENT_EXTRA_EDITORS_LIST, list);
         return intent;
     }
 

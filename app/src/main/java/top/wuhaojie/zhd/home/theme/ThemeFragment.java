@@ -2,18 +2,23 @@ package top.wuhaojie.zhd.home.theme;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import top.wuhaojie.lib.image.ImageLoader;
 import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
 import top.wuhaojie.zhd.home.HomeActivity;
+import top.wuhaojie.zhd.home.theme.adapter.EditorsAdapter;
 
 /**
  * Author: wuhaojie
@@ -25,6 +30,7 @@ import top.wuhaojie.zhd.home.HomeActivity;
 public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
 
     public static final String KEY_ARGUMENT = "ARGUMENT";
+
     @BindView(R.id.tv_description)
     TextView mTvDescription;
     @BindView(R.id.rv_editors)
@@ -33,7 +39,11 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
     RecyclerView mRvContent;
     @BindView(R.id.iv_thumbnail)
     ImageView mIvThumbnail;
+    @BindView(R.id.ll_editors)
+    LinearLayout mLlEditors;
+
     private ThemeFragmentPresenter mPresenter;
+    private EditorsAdapter mEditorsAdapter;
 
     @Override
     public void fillView(String name, String description, String thumbnail) {
@@ -43,6 +53,17 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
         }
         mTvDescription.setText(description);
         ImageLoader.get().load(thumbnail, mIvThumbnail);
+    }
+
+    @Override
+    public void setEditorsList(ArrayList<EditorsAdapter.Item> list) {
+        mEditorsAdapter.setList(list);
+    }
+
+
+    @OnClick(R.id.ll_editors)
+    public void onClick() {
+        mPresenter.onEditorsClick();
     }
 
 
@@ -84,6 +105,11 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
         super.onViewCreated(view, savedInstanceState);
         mPresenter = new ThemeFragmentPresenter(mActivity);
         mPresenter.bindView(this);
+
+        mEditorsAdapter = new EditorsAdapter(mActivity, EditorsAdapter.MODE_HORIZONTAL);
+
+        mRvEditors.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+        mRvEditors.setAdapter(mEditorsAdapter);
 
         Bundle bundle = getArguments();
         Argument argument = (Argument) bundle.getSerializable(KEY_ARGUMENT);
