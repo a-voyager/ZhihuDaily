@@ -14,6 +14,7 @@ import top.wuhaojie.zhd.base.interfaces.BaseView;
 import top.wuhaojie.zhd.data.HttpUtils;
 import top.wuhaojie.zhd.entities.ThemesResponse;
 import top.wuhaojie.zhd.home.theme.adapter.EditorsAdapter;
+import top.wuhaojie.zhd.home.theme.adapter.ThemeStoryAdapter;
 import top.wuhaojie.zhd.home.theme.editors.EditorsActivity;
 import top.wuhaojie.zhd.manager.IntentManager;
 
@@ -69,9 +70,23 @@ public class ThemeFragmentPresenter implements BasePresenter {
             mList.add(item);
         }
         mView.setEditorsList(mList);
+
+
+        List<ThemesResponse.StoriesBean> stories = themesResponse.getStories();
+        ArrayList<ThemeStoryAdapter.Item> items = new ArrayList<>();
+        for (ThemesResponse.StoriesBean s : stories) {
+            String img = null;
+            if (s.getImages() != null && s.getImages().size() > 0)
+                img = s.getImages().get(0);
+            ThemeStoryAdapter.Item item = new ThemeStoryAdapter.Item(s.getType(), s.getId(), s.getTitle(), img);
+            items.add(item);
+        }
+
+        mView.setContentList(items);
+
     }
 
-    public void onEditorsClick() {
+    void onEditorsClick() {
         if (mList == null) return;
         ArrayList<EditorsActivity.Argument> arguments = new ArrayList<>();
         for (EditorsAdapter.Item item : mList) {

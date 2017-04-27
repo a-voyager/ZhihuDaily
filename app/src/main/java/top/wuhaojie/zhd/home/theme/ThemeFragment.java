@@ -19,6 +19,7 @@ import top.wuhaojie.zhd.R;
 import top.wuhaojie.zhd.base.BaseFragment;
 import top.wuhaojie.zhd.home.HomeActivity;
 import top.wuhaojie.zhd.home.theme.adapter.EditorsAdapter;
+import top.wuhaojie.zhd.home.theme.adapter.ThemeStoryAdapter;
 
 /**
  * Author: wuhaojie
@@ -44,6 +45,7 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
 
     private ThemeFragmentPresenter mPresenter;
     private EditorsAdapter mEditorsAdapter;
+    private ThemeStoryAdapter mThemeStoryAdapter;
 
     @Override
     public void fillView(String name, String description, String thumbnail) {
@@ -58,6 +60,11 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
     @Override
     public void setEditorsList(ArrayList<EditorsAdapter.Item> list) {
         mEditorsAdapter.setList(list);
+    }
+
+    @Override
+    public void setContentList(ArrayList<ThemeStoryAdapter.Item> items) {
+        mThemeStoryAdapter.setList(items);
     }
 
 
@@ -110,6 +117,12 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
 
         mRvEditors.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
         mRvEditors.setAdapter(mEditorsAdapter);
+
+
+        mThemeStoryAdapter = new ThemeStoryAdapter(mActivity);
+
+        mRvContent.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRvContent.setAdapter(mThemeStoryAdapter);
 
         Bundle bundle = getArguments();
         Argument argument = (Argument) bundle.getSerializable(KEY_ARGUMENT);

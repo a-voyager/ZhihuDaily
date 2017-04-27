@@ -44,4 +44,7 @@ public class DetailContentAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return mStoryIds.size();
     }
+
+    public void dispose() {
+    }
 }

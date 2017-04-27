@@ -95,6 +95,7 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
 
     @Override
     public void dispose() {
+        mDetailContentAdapter.dispose();
         mVpDetailContent = null;
         mDetailContentAdapter = null;
         mDetailPresenter = null;
@@ -112,7 +113,7 @@ public class DetailActivity extends BaseActivity implements DetailView, DetailCo
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         mDetailPresenter.onDestroy();
+        super.onDestroy();
     }
 }
