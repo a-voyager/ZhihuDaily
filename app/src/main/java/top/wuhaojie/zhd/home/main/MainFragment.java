@@ -48,6 +48,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 
         mSrfMain.setOnRefreshListener(() -> mMainFragmentPresenter.onRefresh());
 
+        mActivity.invalidateOptionsMenu();
 
         mMainContentListAdapter = new MainContentListAdapter(mActivity);
         mMainContentListAdapter.setOnItemClickListener((adapterPosition, item) -> mMainFragmentPresenter.onMainContentListItemClick(adapterPosition, item));

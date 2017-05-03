@@ -75,8 +75,17 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.clear();
+        if (mCurrFragment instanceof MainFragment)
+            getMenuInflater().inflate(R.menu.menu_home, menu);
+        else if (mCurrFragment instanceof ThemeFragment)
+            getMenuInflater().inflate(R.menu.menu_theme, menu);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

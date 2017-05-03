@@ -119,6 +119,8 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
         mRvEditors.setAdapter(mEditorsAdapter);
 
 
+        mActivity.invalidateOptionsMenu();
+
         mThemeStoryAdapter = new ThemeStoryAdapter(mActivity);
 
         mRvContent.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -128,4 +130,6 @@ public class ThemeFragment extends BaseFragment implements ThemeFragmentView {
         Argument argument = (Argument) bundle.getSerializable(KEY_ARGUMENT);
         mPresenter.onViewCreated(view, savedInstanceState, argument);
     }
+
+
 }
