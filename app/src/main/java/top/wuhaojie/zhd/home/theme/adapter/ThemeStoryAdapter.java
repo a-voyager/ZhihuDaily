@@ -2,6 +2,7 @@ package top.wuhaojie.zhd.home.theme.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,8 @@ public class ThemeStoryAdapter extends RecyclerView.Adapter {
             mTvTitle.setText(item.title);
             if (item.type == 2) {
                 mIvIcon.setVisibility(View.VISIBLE);
-                ImageLoader.get().load(item.image, mIvIcon);
+                if (!TextUtils.isEmpty(item.image))
+                    ImageLoader.get().load(item.image, mIvIcon);
             } else {
                 mIvIcon.setVisibility(View.GONE);
             }

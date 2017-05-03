@@ -1,6 +1,8 @@
 package top.wuhaojie.zhd.home;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,9 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
     private final LayoutInflater mLayoutInflater;
+    private int mSelectedPosition = 0;
+
+
     static final int TYPE_HOME = 1;
     static final int TYPE_SUBSCRIBED = 2;
     static final int TYPE_OTHERS = 3;
@@ -115,6 +120,11 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (mSelectedPosition == position) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selectedItemBackground));
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
         int viewType = getItemViewType(position);
         switch (viewType) {
             case TYPE_SUBSCRIBED:
@@ -157,9 +167,16 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
         HomeHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(v -> {
+                selectCurrentItem(getAdapterPosition());
                 if (mListener != null) mListener.onHomeItemClick();
             });
         }
+    }
+
+    private void selectCurrentItem(int position) {
+        notifyItemChanged(mSelectedPosition);
+        mSelectedPosition = position;
+        notifyItemChanged(position);
     }
 
     private class SubscribedHolder extends RecyclerView.ViewHolder {
@@ -189,6 +206,7 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
                 if (mListener != null) mListener.onOthersThemeFollowClick(o);
             });
             mView.setOnClickListener(v -> {
+                selectCurrentItem(getAdapterPosition());
                 if (mListener != null) mListener.onOthersThemeClick(o);
             });
         }
