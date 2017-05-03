@@ -22,4 +22,6 @@ public interface MainFragmentView extends BaseView {
     void resetPage();
 
     void showSnackBar(String message);
+
+    void notifyListItemChanged(int adapterPosition);
 }

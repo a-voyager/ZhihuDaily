@@ -50,7 +50,7 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
 
 
         mMainContentListAdapter = new MainContentListAdapter(mActivity);
-        mMainContentListAdapter.setOnItemClickListener(item -> mMainFragmentPresenter.onMainContentListItemClick(item));
+        mMainContentListAdapter.setOnItemClickListener((adapterPosition, item) -> mMainFragmentPresenter.onMainContentListItemClick(adapterPosition, item));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
         mRvContentMain.setLayoutManager(linearLayoutManager);
@@ -96,6 +96,11 @@ public class MainFragment extends BaseFragment implements MainFragmentView {
     @Override
     public void showSnackBar(String message) {
         SnackBarUtils.show(mActivity, message);
+    }
+
+    @Override
+    public void notifyListItemChanged(int adapterPosition) {
+        mMainContentListAdapter.notifyItemChanged(adapterPosition);
     }
 
     @Override

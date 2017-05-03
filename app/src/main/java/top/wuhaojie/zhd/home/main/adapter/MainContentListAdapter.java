@@ -1,6 +1,7 @@
 package top.wuhaojie.zhd.home.main.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseArray;
@@ -35,11 +36,15 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
     private final LayoutInflater mLayoutInflater;
 
     public static class Item {
-
-
         public String title;
         public String imgUrl;
         public int id;
+        public STATE state = STATE.DEFAULT;
+
+        public enum STATE {
+            DEFAULT,
+            READ
+        }
     }
 
     private final List<Item> mStoryList = new ArrayList<>();
@@ -150,7 +155,7 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Item item);
+        void onItemClick(int adapterPosition, Item item);
     }
 
     private OnItemClickListener mOnItemClickListener;
@@ -171,13 +176,18 @@ public class MainContentListAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
                 if (mOnItemClickListener != null)
-                    mOnItemClickListener.onItemClick(mStoryList.get(getAdapterPosition()));
+                    mOnItemClickListener.onItemClick(getAdapterPosition(), mStoryList.get(getAdapterPosition()));
             });
         }
 
         public void setView(Item item) {
             mTvTitle.setText(item.title);
             ImageLoader.get().load(item.imgUrl, mIvIcon);
+            if (item.state == Item.STATE.DEFAULT) {
+                mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.content_item_title_default));
+            } else {
+                mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.content_item_title_read));
+            }
         }
 
     }

@@ -103,7 +103,11 @@ public class MainFragmentPresenter implements BasePresenter {
         loadTodayData();
     }
 
-    public void onMainContentListItemClick(MainContentListAdapter.Item item) {
+    public void onMainContentListItemClick(int adapterPosition, MainContentListAdapter.Item item) {
+        // mark as read
+        item.state = MainContentListAdapter.Item.STATE.READ;
+        mView.notifyListItemChanged(adapterPosition);
+        // intent
         Intent intent = IntentManager.toDetailActivity(mContext, mStoryIds, String.valueOf(item.id));
         mContext.startActivity(intent);
     }
