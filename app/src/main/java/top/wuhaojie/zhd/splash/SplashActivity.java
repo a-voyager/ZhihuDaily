@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity implements SplashView {
         setContentView(getLayoutResID());
         ButterKnife.bind(this);
 
-        Animation scale = AnimationUtils.loadAnimation(this, R.anim.scale);
+        Animation scale = AnimationUtils.loadAnimation(this, R.anim.alpha);
         mIvSplash.startAnimation(scale);
 
         Animation alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);

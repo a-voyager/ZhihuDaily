@@ -66,6 +66,8 @@ public class HomeActivity extends BaseActivity implements HomeView {
     public void onBackPressed() {
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
+        } else if (!(mCurrFragment instanceof MainFragment)) {
+            switch2Main();
         } else {
             super.onBackPressed();
         }
@@ -116,6 +118,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
 
     @Override
     public void switch2Main() {
+        mHomeNavigationAdapter.setSelected(0);
         switchFragment(getSupportFragmentManager(), MainFragment.newInstance());
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(getString(R.string.app_name));

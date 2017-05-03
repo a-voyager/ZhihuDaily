@@ -42,6 +42,10 @@ public class HomeNavigationAdapter extends RecyclerView.Adapter {
         mLayoutInflater = LayoutInflater.from(context);
     }
 
+    public void setSelected(int position) {
+        mSelectedPosition = position;
+    }
+
     static class Item<T> {
         int type;
         T data;
