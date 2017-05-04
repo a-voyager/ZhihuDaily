@@ -1,9 +1,9 @@
 # 简单日报
-模仿 `知乎日报` 应用，基于 MVP + Retrofit + ButterKnife + Material Design + Glide
+模仿 `知乎日报` 应用，基于 MVP + Retrofit + ButterKnife + Material Design + Glide + GreenDao + RetroLambda，仅供参考学习，不可用作其他用途，欢迎 Fork & Star.
 
 # 效果图
 
-![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/img.png "效果图")
+![image](https://github.com/a-voyager/ZhihuDaily/raw/master/imgs/img.jpg "效果图")
 
 # 开源许可
     The MIT License (MIT)
